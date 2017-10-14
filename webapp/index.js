@@ -9,7 +9,11 @@ var Tray = remote.require('tray');
 var Menu = remote.require('menu');
 var path = require('path');
 
-var login = document.querySelector('.button.is-link');
+var login = document.querySelector('button[id=login]');
+if(login){
+
+    console.log('linked');
+}
 login.addEventListener('click', function () {
     ipc.send('load-login');
 });
