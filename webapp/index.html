@@ -8,83 +8,124 @@
 		
   	</head>
   	<body>
-  	<section class="section">
+      <section class="hero is-info is-bold">
+        <div class="topbuffer">
+          <div class="hero-head">
+            <nav class="navbar">
+              <div class="container">
+                <div class="navbar-brand">
+                  <a class="navbar-item">
+                    <h1 class="title has-text-centered">
+                      Game Nat Tester
+                    </h1>
+                  </a>
+                  <span class="navbar-burger burger" data-target="navbarMenuHeroA">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  </span>
+                </div>
+                <div id="navbarMenuHeroA" class="navbar-menu">
+                  <div class="navbar-end">
+                    <a class="navbar-item is-active">
+                      Ping
+                    </a>
+                    <a class="navbar-item">
+                      ISP
+                    </a>
+                    <a class="navbar-item">
+                      Profile
+                    </a>
+                    <span class="navbar-item">
+                      <a class="button is-info is-inverted" id="login">
+                        <span>Login</span>
+                      </a>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
 
-    	<h1 class="title has-text-centered">
-    		Game Nat Tester
-    	</h1>
+        	<!--<h1 class="title has-text-centered">
+        		Game Nat Tester
+        	</h1>
 
-    	<p class="subtitle has-text-centered">
-        	Test your ping in various games!
-     	</p>
+        	<p class="subtitle has-text-centered">
+            	Test your ping in various games!
+         	</p>
 
-      	<div class="right">
-      		<a class="button" id = 'login'>Login</a>
-      	</div>
+          	<div class="right">
+          		<a class="button" id="login">Login</a>
+          	</div>
 
-		<div class="tabs is-centered is-boxed is-medium">
-  			<ul>
-    			<li class="is-active">
-      				<a>
-        				<span>Ping</span>
-      				</a>
-    			</li>
-    			<li>
-      				<a>
-        				<span>ISP</span>
-      				</a>
-    			</li>
-    			<li>
-      				<a>
-        				<span>Profile</span>
-      				</a>
-    			</li>
-  			</ul>
-		</div>
+    		<div class="tabs is-centered is-boxed is-medium">
+      			<ul>
+        			<li class="is-active">
+          				<a>
+            				<span>Ping</span>
+          				</a>
+        			</li>
+        			<li>
+          				<a>
+            				<span>ISP</span>
+          				</a>
+        			</li>
+        			<li>
+          				<a>
+            				<span>Profile</span>
+          				</a>
+        			</li>
+      			</ul>
+    		</div>-->
+          <div class="hero-body">
+            <div class="container has-text-centered">
+          		<div class="field has-addons has-addons-centered">
+          			<p class="control">
+            				<div class="select">
+              				<select>
+                					<option>Select game</option>
+                					<option>ffxiv</option>      					
+                					<option>wow</option>
+                					<option>cs:go</option>
+              				</select>
+            				</div>
+          			</p>
+          		</div>
 
-		<div class="field has-addons has-addons-centered">
-			<p class="control">
-  				<div class="select">
-    				<select>
-      					<option>Select game</option>
-      					<option>ffxiv</option>      					
-      					<option>wow</option>
-      					<option>cs:go</option>
-    				</select>
-  				</div>
-			</p>
-		</div>
+          		<div class="field has-addons has-addons-centered">
+          			<p class="control">
+            				<div class="select">
+              				<select>
+                					<option>Select server/datacenter</option>
+                					<option>ip 1</option>
+                					<option>ip 3</option>
+                					<option>ip 3</option>
+              				</select>
+            				</div>
+          			</p>
+          		</div>
 
-		<div class="field has-addons has-addons-centered">
-			<p class="control">
-  				<div class="select">
-    				<select>
-      					<option>Select server/datacenter</option>
-      					<option>ip 1</option>
-      					<option>ip 3</option>
-      					<option>ip 3</option>
-    				</select>
-  				</div>
-			</p>
-		</div>
+          		<div class="field has-addons has-addons-centered">
+            			<div class="control">
+              			<button class="button is-link" id="ping">Ping</button>
+            			</div>
+          		</div>
+            </div>
+          </div>
 
-		<div class="field has-addons has-addons-centered">
-  			<div class="control">
-    			<button class="button is-link" id='ping'>Ping</button>
-  			</div>
-		</div>
+      		<section class="hero is-success is-fullheight is-bold">
+        			<div class="hero-body">
+          			<div class="container">
+            				<h1 class="title has-text-centered">
+              				Map
+            				</h1>
+          			</div>
+        			</div>
+      		</section>
 
-		<section class="hero is-success is-fullheight is-bold">
-  			<div class="hero-body">
-    			<div class="container">
-      				<h1 class="title has-text-centered">
-        				Map
-      				</h1>
-    			</div>
-  			</div>
-		</section>
-
-	  </section>
+        </div>
+      </section>
 	  <script src="index.js" type="text/javascript"></script>
   	</body>
 </html>

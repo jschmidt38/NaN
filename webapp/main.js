@@ -1,7 +1,11 @@
 const electron = require('electron');  
 var {app, BrowserWindow, ipcMain} = electron;  
+<<<<<<< HEAD
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
+=======
+
+>>>>>>> origin/master
 
 // Module to control application life.
 //const app = electron.app
@@ -16,7 +20,7 @@ const url = require('url')
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-var loginWindow =null;
+var loginWindow = null;
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1024, height: 768, frame: true})
@@ -30,7 +34,7 @@ function createWindow () {
 
   mainWindow.setMenu(null);
   // Open the DevTools.
- mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -73,11 +77,12 @@ ipcMain.on('load-login', function () {
   }
 
   loginWindow = new BrowserWindow({
-      frame: false,
       height: 200,
       resizable: false,
       width: 200
   });
+
+  loginWindow.setMenu(null);
 
   loginWindow.loadUrl('file://' + __dirname + '../webapp/login.html');
 

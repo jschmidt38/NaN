@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
-
 document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
