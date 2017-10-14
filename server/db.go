@@ -9,11 +9,10 @@ import (
 )
 
 var (
-	password = flag.String("password", "Hackgt123!", "the database password")
+	password = flag.String("password", "", "the database password")
 	port     = flag.Int("port", 1433, "the database port")
-	server   = flag.String("server", "hackgt4-nan.database.windows.net", "the database server")
-	database = flag.String("database", "hackgt4-nan", "database to connect to")
-	user     = flag.String("user", "team-nan@hackgt4-nan", "the database user")
+	server   = flag.String("server", "", "the database server")
+	user     = flag.String("user", "", "the database user")
 )
 
 func getDB() (conn *sql.DB, err error) {
