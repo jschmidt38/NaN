@@ -1,6 +1,6 @@
 const electron = require('electron');  
 var {app, BrowserWindow, ipcMain} = electron;  
-
+var ping = require('ping');
 
 // Module to control application life.
 //const app = electron.app
@@ -84,4 +84,12 @@ ipcMain.on('load-login', function () {
   loginWindow.on('closed', function () {
       loginWindow = null;
   });
+});
+
+ipcMain.on('pingtest', (event, arg) => {
+  console.log(arg);
+  ping.promise.probe(arg)
+    .then(function (res) {
+      event.sender.send('pingtest-reply', res);
+    });
 });
