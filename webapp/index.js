@@ -10,7 +10,7 @@ var path = require("path");
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    document.querySelector("#login")
+    document.querySelector("#ping")
         .addEventListener("click", function () {
         ipc.send("load-login");
     });
