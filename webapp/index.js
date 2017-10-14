@@ -15,17 +15,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-login");
     });
 
-    
-    loadMapScenario();
-    
-
-
-    
-
-
 });
 var map;
-function loadMapScenario() {
+function loadMap() {
     map = new Microsoft.Maps.Map(document.querySelector("#myMap"), {
         credentials: key
     });
