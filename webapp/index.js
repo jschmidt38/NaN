@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-login");
     });
 
-    document.querySelector("#ping")
+    document.querySelector("#pingchart")
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
     });
