@@ -1,21 +1,19 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
-'use strict';
+"use strict";
 
-var ipc = require('electron').ipcRenderer;
-var path = require('path');
+var ipc = require("electron").ipcRenderer;
+var path = require("path");
+
 
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    var login = document.querySelector("#login");
-    
-    login.addEventListener("click", function () {
-        console.log("dank");
+    document.querySelector("#ping")
+        .addEventListener("click", function () {
         ipc.send("load-login");
     });
-    console.log("loaded");
 });
 
 

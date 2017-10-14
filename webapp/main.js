@@ -67,7 +67,6 @@ app.on('activate', function () {
 
 
 ipcMain.on('load-login', function () {
-  console.log("abcd");
   if (loginWindow) {
       return;
   }
