@@ -10,3 +10,7 @@ body::-webkit-scrollbar {
 .center {
   margin: 0 auto;
 }
+
+.topbuffer {
+    padding-top: 20px;
+}
