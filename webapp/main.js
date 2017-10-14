@@ -1,19 +1,24 @@
-const electron = require('electron')
+const electron = require('electron');  
+var {app, BrowserWindow, ipcMain} = electron;  
+
+
 // Module to control application life.
-const app = electron.app
+//const app = electron.app
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+//const BrowserWindow = electron.BrowserWindow
 
 const path = require('path')
 const url = require('url')
 
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
-
+var loginWindow =null;
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1000, height: 600, frame: true})
+  mainWindow = new BrowserWindow({width: 1024, height: 768, frame: true})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -23,9 +28,8 @@ function createWindow () {
   }))
 
   mainWindow.setMenu(null);
-
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+ mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
@@ -62,4 +66,21 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 
+ipcMain.on('load-login', function () {
+  if (loginWindow) {
+      return;
+  }
 
+  loginWindow = new BrowserWindow({
+      frame: false,
+      height: 200,
+      resizable: false,
+      width: 200
+  });
+
+  loginWindow.loadUrl('file://' + __dirname + '../webapp/login.html');
+
+  loginWindow.on('closed', function () {
+      loginWindow = null;
+  });
+});
