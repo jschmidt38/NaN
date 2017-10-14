@@ -11,6 +11,10 @@ var traceroute = require('nodejs-traceroute');
 const path = require('path')
 const url = require('url')
 
+//to reach databasee
+var ipAddr = "104.45.146.84";
+var PORT = 8080;
+
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -133,3 +137,35 @@ ipcMain.on('test', (event, arg) => {
       tracer.trace(res.host);
     });
 });
+
+//Post register data
+//implement verification + end case in the future
+function register(emailGiven, passwordGiven) {
+
+  
+  var request = require("..");
+  request.post(ipAddr+":"+PORT+"/user/register")
+        .send({email: emailGiven, password: passwordGiven})
+        .set("accept", "json")
+        .end((err,res) => {
+            if(err) {
+                //
+            }
+            //res is always in json
+
+
+        });
+}
+
+function login(error, msg,tok){
+  var request;  
+  request.post(ipAddr+":"+PORT+"/user/register")
+        .send({errorbool: error, message:msg, token: token})
+        .set("accept","json")
+        .end((err,res) => {
+          if(err) {
+              //
+          }
+          //res is always in json
+  });
+}
