@@ -20,6 +20,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
     });
+
+    document.querySelector("#home")
+        .addEventListener("click", function () {
+        ipc.send("load-home");
+    });
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {

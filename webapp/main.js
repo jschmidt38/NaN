@@ -90,26 +90,23 @@ ipcMain.on('load-login', function () {
 });
 
 ipcMain.on('load-pingchart', function () {
-  if (pingchartWindow) {
-      return;
-  }
-
-  pingchartWindow = new BrowserWindow({
-      height: 768,
-      width: 1024
-  });
-
-  pingchartWindow.loadURL(url.format({
+  
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'pingchart.html'),
     protocol: 'file:',
     slashes: true
-  }))
+  })) 
 
-  pingchartWindow.setMenu(null);
+});
 
-  pingchartWindow.on('closed', function () {
-      pingchartWindow = null;
-  });
+ipcMain.on('load-home', function () {
+  
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  })) 
+
 });
 
 ipcMain.on('test', (event, arg) => {
