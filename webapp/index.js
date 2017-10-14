@@ -4,13 +4,16 @@
 'use strict';
 
 var ipc = require('electron').ipcRenderer;
-var remote = require('remote');
-var Tray = remote.require('tray');
-var Menu = remote.require('menu');
 var path = require('path');
 
-var login = document.querySelector('.button.is-link');
-login.addEventListener('click', function () {
-    ipc.send('load-login');
-});
 
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+    var login = document.querySelector('#ping');
+    
+    login.addEventListener('click', function () {
+        console.log("dank");
+        ipc.send('load-login');
+    });
+    console.log("loaded");
+});

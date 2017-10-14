@@ -12,22 +12,23 @@ type resultsResponse struct {
 }
 
 func postResultsHandler(w http.ResponseWriter, r *http.Request) {
+	var failed bool
 	userToken := r.Header.Get("userToken")
 	dataCenter, err := strconv.Atoi(r.Header.Get("dataCenter"))
 	if err != nil {
-		goto badQuery
+		failed = true
 	}
 	avgPing, err := strconv.Atoi(r.Header.Get("avgPing"))
 	if err != nil {
-		goto badQuery
+		failed = true
 	}
 	hopCount, err := strconv.Atoi(r.Header.Get("hopCount"))
 	if err != nil {
-		goto badQuery
+		failed = true
 	}
 
-	if err != nil || userToken == "" {
-	badQuery:
+	if err != nil || failed || userToken == "" {
+
 		resp := &resultsResponse{Success: false,
 			Message: "error 400: bad request",
 		}
@@ -53,5 +54,9 @@ func postResultsHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 		return
 	}
+	defer db.Close()
+	dataCenter++
+	avgPing++
+	hopCount++
 
 }
