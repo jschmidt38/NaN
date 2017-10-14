@@ -1,11 +1,7 @@
 const electron = require('electron');  
-var {app, BrowserWindow, ipcMain} = electron;  
-<<<<<<< HEAD
+var {app, BrowserWindow, ipcMain} = electron;
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
-=======
-
->>>>>>> origin/master
 
 // Module to control application life.
 //const app = electron.app
@@ -93,7 +89,6 @@ ipcMain.on('load-login', function () {
   });
 });
 
-<<<<<<< HEAD
 ipcMain.on('load-pingchart', function () {
   if (pingchartWindow) {
       return;
@@ -115,7 +110,8 @@ ipcMain.on('load-pingchart', function () {
   pingchartWindow.on('closed', function () {
       pingchartWindow = null;
   });
-=======
+});
+
 ipcMain.on('test', (event, arg) => {
   console.log(arg);
   var ping_traceroute = [];
@@ -139,5 +135,5 @@ ipcMain.on('test', (event, arg) => {
             });
       tracer.trace(res.host);
     });
->>>>>>> 08ac495524d3d7c54a79103b1123648e921e5c98
+//08ac495524d3d7c54a79103b1123648e921e5c98
 });
