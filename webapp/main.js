@@ -122,18 +122,17 @@ ipcMain.on('test', (event, arg) => {
       const tracer = new traceroute();
       var count = 0;
       tracer.on('destination', (destination) => {
-                console.log(`destination: ${destination}`);
+                //console.log(`destination: ${destination}`);
             })
             .on('hop', (hop) => {
-                console.log(`hop: ${JSON.stringify(hop)}`);
+                //console.log(`hop: ${JSON.stringify(hop)}`);
                 count++;
             })
             .on('close', (code) => {
-                console.log(`close: code ${code}`);
+                //console.log(`close: code ${code}`);
                 ping_traceroute.push(count);
                 event.sender.send('test-reply', ping_traceroute);
             });
       tracer.trace(res.host);
     });
-//08ac495524d3d7c54a79103b1123648e921e5c98
 });
