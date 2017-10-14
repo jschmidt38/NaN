@@ -15,19 +15,3 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-login");
     });
 });
-
-
-document.addEventListener("DOMContentLoaded", function(event) {
-	var ping = document.querySelector("#ping");
-
-	ping.addEventListener("click", function(event,arg) {
-		console.log("clicked");
-		ipc.send("pingtest", "204.2.229.9");
-	});
-	console.log("loaded");
-});
-
-ipc.on("pingtest-reply", (event, arg) => {
-	console.log(arg);
-
-});
