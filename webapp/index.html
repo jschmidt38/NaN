@@ -27,8 +27,11 @@
                 </div>
                 <div id="navbarMenuHeroA" class="navbar-menu">
                   <div class="navbar-end">
-                    <a class="navbar-item is-active">
-                      Ping
+                    <a class="navbar-item is-active" id="home">
+                      Home
+                    </a>
+                    <a class="navbar-item" id="pingchart">
+                      Ping Chart
                     </a>
                     <a class="navbar-item">
                       ISP
@@ -36,11 +39,6 @@
                     <a class="navbar-item">
                       Profile
                     </a>
-                    <span class="navbar-item">
-                      <a class="button is-info " id="pingchart">
-                        <span>View Ping Chart</span>
-                      </a>
-                    </span>
                     <span class="navbar-item">
                       <a class="button is-info is-inverted" id="login">
                         <span>Login</span>
@@ -88,18 +86,37 @@
             </div>
           </div>
 
-      		<section class="hero is-success is-fullheight is-bold">
-        			<div class="hero-body">
-          			<div class="container">
-            				<h1 class="title has-text-centered">
-              				Map
-            				</h1>
-          			</div>
-        			</div>
-      		</section>
-
+  		<section class="hero is-success is-fullheight is-bold">
+        <div class="topbuffer">
+          <div class="hero-head">
+            <nav class="navbar">
+              <div class="container">
+                <div class="navbar-brand">
+                  <a class="navbar-item">
+                    <h1 class="title has-text-centered">
+                      Data Center Map
+                    </h1>
+                  </a>
+                </div>
+              </div>
+            </nav>
+          </div>
         </div>
-      </section>
+  			<div class="hero-body">
+    			<div class="container">
+            <section class="hero is-success is-fullheight is-bold">
+              <div class="hero-body"  id ="myMap">
+              </div>
+            </section>
+    			</div>
+  			</div>
+
+
+  		</section>
+
+	  </section>
+	  
 	  <script src="index.js" type="text/javascript"></script>
+	  <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMap' async defer></script>
   	</body>
 </html>

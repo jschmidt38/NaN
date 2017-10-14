@@ -11,6 +11,10 @@ var traceroute = require('nodejs-traceroute');
 const path = require('path')
 const url = require('url')
 
+//to reach databasee
+var ipAddr = "104.45.146.84";
+var PORT = 8080;
+
 
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -90,26 +94,23 @@ ipcMain.on('load-login', function () {
 });
 
 ipcMain.on('load-pingchart', function () {
-  if (pingchartWindow) {
-      return;
-  }
-
-  pingchartWindow = new BrowserWindow({
-      height: 768,
-      width: 1024
-  });
-
-  pingchartWindow.loadURL(url.format({
+  
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'pingchart.html'),
     protocol: 'file:',
     slashes: true
-  }))
+  })) 
 
-  pingchartWindow.setMenu(null);
+});
 
-  pingchartWindow.on('closed', function () {
-      pingchartWindow = null;
-  });
+ipcMain.on('load-home', function () {
+  
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  })) 
+
 });
 
 ipcMain.on('test', (event, arg) => {
@@ -122,18 +123,49 @@ ipcMain.on('test', (event, arg) => {
       const tracer = new traceroute();
       var count = 0;
       tracer.on('destination', (destination) => {
-                console.log(`destination: ${destination}`);
+                //console.log(`destination: ${destination}`);
             })
             .on('hop', (hop) => {
-                console.log(`hop: ${JSON.stringify(hop)}`);
+                //console.log(`hop: ${JSON.stringify(hop)}`);
                 count++;
             })
             .on('close', (code) => {
-                console.log(`close: code ${code}`);
+                //console.log(`close: code ${code}`);
                 ping_traceroute.push(count);
                 event.sender.send('test-reply', ping_traceroute);
             });
       tracer.trace(res.host);
     });
-//08ac495524d3d7c54a79103b1123648e921e5c98
 });
+
+//Post register data
+//implement verification + end case in the future
+function register(emailGiven, passwordGiven) {
+
+  
+  var request = require("..");
+  request.post(ipAddr+":"+PORT+"/user/register")
+        .send({email: emailGiven, password: passwordGiven})
+        .set("accept", "json")
+        .end((err,res) => {
+            if(err) {
+                //
+            }
+            //res is always in json
+
+
+        });
+}
+
+function login(error, msg,tok){
+  var request;  
+  request.post(ipAddr+":"+PORT+"/user/register")
+        .send({errorbool: error, message:msg, token: token})
+        .set("accept","json")
+        .end((err,res) => {
+          if(err) {
+              //
+          }
+          //res is always in json
+  });
+}
