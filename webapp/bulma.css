@@ -10068,9 +10068,4 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
-/* added */
-
-body::-webkit-scrollbar { 
-    display: none; 
-}
 /*# sourceMappingURL=bulma.css.map */
