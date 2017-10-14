@@ -1,6 +1,7 @@
 const electron = require('electron');  
 var {app, BrowserWindow, ipcMain} = electron;  
 var ping = require('ping');
+var traceroute = require('nodejs-traceroute');
 
 // Module to control application life.
 //const app = electron.app
@@ -85,10 +86,27 @@ ipcMain.on('load-login', function () {
   });
 });
 
-ipcMain.on('pingtest', (event, arg) => {
+ipcMain.on('test', (event, arg) => {
   console.log(arg);
+  var ping_traceroute = [];
   ping.promise.probe(arg)
     .then(function (res) {
-      event.sender.send('pingtest-reply', res);
+      ping_traceroute.push(res);
+      console.log("starting tracert");
+      const tracer = new traceroute();
+      var count = 0;
+      tracer.on('destination', (destination) => {
+                console.log(`destination: ${destination}`);
+            })
+            .on('hop', (hop) => {
+                console.log(`hop: ${JSON.stringify(hop)}`);
+                count++;
+            })
+            .on('close', (code) => {
+                console.log(`close: code ${code}`);
+                ping_traceroute.push(count);
+                event.sender.send('test-reply', ping_traceroute);
+            });
+      tracer.trace(res.host);
     });
 });

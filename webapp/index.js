@@ -10,7 +10,7 @@ var path = require("path");
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    document.querySelector("#ping")
+    document.querySelector("#login")
         .addEventListener("click", function () {
         ipc.send("load-login");
     });
@@ -22,12 +22,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	ping.addEventListener("click", function(event,arg) {
 		console.log("clicked");
-		ipc.send("pingtest", "204.2.229.9");
+		ipc.send("test", "204.2.229.9");
 	});
 	console.log("loaded");
 });
 
-ipc.on("pingtest-reply", (event, arg) => {
+ipc.on("test-reply", (event, arg) => {
 	console.log(arg);
-
 });
