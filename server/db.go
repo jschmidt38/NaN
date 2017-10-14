@@ -17,7 +17,7 @@ var (
 )
 
 func getDB() (conn *sql.DB, err error) {
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d", *server, *user, *password, *port)
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s", *server, *user, *password, *port, *database)
 
 	conn, err = sql.Open("mssql", connString)
 	return

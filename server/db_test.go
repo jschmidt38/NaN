@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestDatabaseConnection(t *testing.T) {
 	db, err := getDB()
@@ -9,9 +12,14 @@ func TestDatabaseConnection(t *testing.T) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM users")
+	rows, err := db.Query("SELECT email FROM Users")
 	if err != nil {
 		t.Error(err.Error())
 	}
 	defer rows.Close()
+	for rows.Next() {
+		var email string
+		rows.Scan(&email)
+		fmt.Println(email)
+	}
 }
