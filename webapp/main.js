@@ -16,6 +16,8 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 var loginWindow = null;
+var pingchartWindow = null;
+
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 1024, height: 768, frame: true})
@@ -83,5 +85,28 @@ ipcMain.on('load-login', function () {
 
   loginWindow.on('closed', function () {
       loginWindow = null;
+  });
+});
+
+ipcMain.on('load-pingchart', function () {
+  if (pingchartWindow) {
+      return;
+  }
+
+  pingchartWindow = new BrowserWindow({
+      height: 768,
+      width: 1024
+  });
+
+  pingchartWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'pingchart.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  pingchartWindow.setMenu(null);
+
+  pingchartWindow.on('closed', function () {
+      pingchartWindow = null;
   });
 });

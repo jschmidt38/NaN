@@ -10,8 +10,14 @@ var path = require("path");
 
 
 document.addEventListener("DOMContentLoaded", function(event) { 
+	
     document.querySelector("#login")
         .addEventListener("click", function () {
         ipc.send("load-login");
+    });
+
+    document.querySelector("#ping")
+        .addEventListener("click", function () {
+        ipc.send("load-pingchart");
     });
 });
