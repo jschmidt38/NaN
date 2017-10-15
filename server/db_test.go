@@ -146,3 +146,50 @@ func TestDataCenterGame(t *testing.T) {
 	}
 	fmt.Println(string(b))
 }
+
+func TestInsertResults(t *testing.T) {
+	db, err := getDB()
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	_, err = db.Exec(`INSERT INTO Results(userID, dataCenterID, testDate, ipAddr, avgPing, hopCount, ispID, regionID) 
+	VALUES(?, ?, GETDATE(), ?, ?, ?, ?, ?)`, 1, 3, "143.215.121.9", 74, 12, 1, getRegionFromIP("143.215.121.9"))
+	if err != nil {
+		t.Error(err.Error())
+	}
+}
+
+func TestRegionFromIP(t *testing.T) {
+	fmt.Println(getRegionFromIP("143.215.121.9"))
+}
+
+func TestAnalysis(t *testing.T) {
+	var (
+		rows *sql.Rows
+
+		avgPing int
+		avgHops int
+		date    string
+	)
+
+	db, err := getDB()
+	if err != nil {
+		t.Error(err.Error())
+	}
+	defer db.Close()
+
+	rows, err = db.Query(`SELECT AVG(r.avgPing) avgPing, AVG(r.hopCount) hopCount, 
+		dateadd(DAY,0, datediff(day,0, r.testDate))
+	 	FROM Results r 
+		LEFT JOIN Regions reg ON r.regionID = reg.id WHERE r.dataCenterID = ?
+		GROUP BY dateadd(DAY,0, datediff(day,0, r.testDate))`, 3)
+	if err != nil {
+		t.Error(err.Error())
+	}
+
+	for rows.Next() {
+		rows.Scan(&avgPing, &avgHops, &date)
+		fmt.Println(avgPing, avgHops, date)
+	}
+}

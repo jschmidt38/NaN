@@ -69,6 +69,9 @@ func getRegionFromIP(ip string) int {
 	var bestDist float64
 
 	for _, fence := range regionFences {
+		if fence == nil {
+			continue
+		}
 		userPoint := geo.NewPoint(userLat, userLon)
 		fencePoint := geo.NewPoint(fence.lat, fence.lon)
 		if bestFit == nil {
@@ -102,6 +105,10 @@ type regionFence struct {
 var regionFences = make([]*regionFence, 8)
 
 func init() {
+	loadGeoFences()
+}
+
+func loadGeoFences() {
 	db, err := getDB()
 	if err != nil {
 		return

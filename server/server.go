@@ -16,12 +16,15 @@ func startHTTPServer() {
 	http.HandleFunc("/regions/all", allRegionHandler)
 	http.HandleFunc("/regions/forgame", regionForGameHandler)
 
+	// Get all games
 	http.HandleFunc("/games/all", allGameHandler)
 
 	// Datacenters/ip
 	http.HandleFunc("/datacenters/all", allDataCenterHandler)
 	http.HandleFunc("/datacenters/forid", dataCenterForIDHandler)
 	http.HandleFunc("/datacenters/forgame", dataCenterForGameHandler)
+
+	http.HandleFunc("/historical", historicalResultsHandler)
 
 	http.HandleFunc("/test/post", postResultsHandler)
 
