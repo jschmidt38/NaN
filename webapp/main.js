@@ -3,8 +3,10 @@ var {app, BrowserWindow, ipcMain} = electron;
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
-//var isp;
-
+var isp;
+var token = null;
+var status = false; //log in status
+var userName = null;
 
 // Module to control application life.
 //const app = electron.app
@@ -17,8 +19,6 @@ const url = require('url')
 //to reach databasee
 var ipAddr = "104.45.146.84";
 var PORT = "8080";
-
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -200,10 +200,12 @@ ipcMain.on("login",(event,emailGiven, passwordGiven) => {
            }
            //res is always in json
            else{
-
-
-             var data = JSON.parse(res.body);
-
+             var data = JSON.parse(res.text);
+             console.log(data.success);
+             if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
            }
 
         });
@@ -219,21 +221,31 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
           }
           //res is always in json
           else{
-            var data = res.body;
-            console.log(body);
+            var data = JSON.parse(res.text);
+            if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
           }
 
   });
 });
 
 
-/*request.post("http://ip-api.com/json/")
-  .set("accept", "json")
-  .end((err,res) => {
-    if(err) {
-      alert("Oh no! ISP Lookup error");
-    }
-    //res always json
-    isp = res.body.isp;
-    //console.log(isp);
-  }); */ 
+
+  
+ipcMain.on("gamePop",(event,arg) => {
+  request.get(ipAddr+":"+PORT+"/games/all", function(err,res){
+          if(err) {
+           // alert("Oh no! Login error");
+           console.log(err);
+          }
+          //res is always in json
+          else{
+            var data = JSON.parse(res.text);
+            event.sender.send("gamesReturn", data);
+            
+          }
+
+  });
+});

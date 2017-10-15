@@ -27,3 +27,18 @@ body::-webkit-scrollbar {
     background-image: url("img/bg_ishgard.jpg");
     background-color: #cccccc;
 }*/
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn .5s ease-in 1 forwards;
+}
+
+.is-paused {
+  animation-play-state: paused;
+}

@@ -12,27 +12,45 @@ var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-	
+    var game_drop = document.querySelector("#game_dropdown");
+
+
+
+    ipc.on("gamesReturn", (event, arg) => {
+
+        var gameList = arg.games;
+        for(var i = 0; i < gameList.length; i++)  {
+            var opt = document.createElement("option");
+            var x = gameList[i].gameID;
+            var y = gameList[i].gameName;
+            opt.value = x;
+            opt.innerHTML = y;
+            game_drop.appendChild(opt);
+
+
+        };
+    });
+    ipc.send("gamePop",game_drop);
+
+    
+
+
+
+
     document.querySelector("#truelogin")
         .addEventListener("click", function () {
         //ipc.send("load-login");
-        console.log("Login clicked");
         var mail = document.querySelector("#emailLogin");
         var pass = document.querySelector("#passwordLogin");
-        console.log(mail.value + pass.value);
         ipc.send("login",mail.value,pass.value);
-
-
-
-        
-
-
     });
 
     document.querySelector("#trueregister")
         .addEventListener("click", function () {
-        //ipc.send("load-login");
-        console.log("Register clicked");
+
+        var mail = document.querySelector("#regEmail");
+        var pass = document.querySelector("#regPassword");
+        ipc.send("register",mail.value,pass.value);
 
     });
 
