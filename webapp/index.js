@@ -11,14 +11,14 @@ var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
 document.addEventListener("DOMContentLoaded", function(event) { 
 	
-    document.querySelector("#login")
+    document.querySelector("#truelogin")
         .addEventListener("click", function () {
         //ipc.send("load-login");
 
     });
 
     tippy('#login', {
-        html: document.querySelector('#insideDivLogin'),
+        html: document.querySelector('#truelogin'),
         arrow: true,
         animation: 'fade',
         trigger: 'click'
@@ -29,10 +29,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-pingchart");
     });
 
-    document.querySelector("#home")
-        .addEventListener("click", function () {
-        ipc.send("load-home");
-    });
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
