@@ -72,10 +72,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       ipc.send("load-home");
   });
 
-  // document.querySelector("#pingchart")
-  //     .addEventListener("click", function () {
-  //     ipc.send("load-pingchart");
-  // });
+  document.querySelector("#pingchart")
+      .addEventListener("click", function () {
+      ipc.send("load-pingchart");
+  });
 
   //fade listeners
   document.querySelector("#nne")
