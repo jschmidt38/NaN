@@ -107,7 +107,7 @@ function loadMap() {
 }
 
 function defaultPushpin() {
-	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { color : 'red',
+	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { icon : 'img/defaultPushpin.png',
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
 	map.entities.push(pushpin);
 }
