@@ -101,7 +101,8 @@ document.addEventListener('DOMContentLoaded', function () {
 var map;
 function loadMap() {
     map = new Microsoft.Maps.Map(document.querySelector("#myMap"), {
-        credentials: key
+        credentials: key,
+        zoom: 10
     });
     defaultPushpin();
 }
