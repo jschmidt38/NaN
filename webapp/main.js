@@ -3,7 +3,8 @@ var {app, BrowserWindow, ipcMain} = electron;
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
-var isp;
+//var isp;
+
 
 // Module to control application life.
 //const app = electron.app
@@ -130,10 +131,41 @@ ipcMain.on('load-regionchart', function () {
 
 });
 
-ipcMain.on('test', (event, arg) => {
-  console.log(arg);
+ipcMain.on("game-selected", (event, game) => {
+  console.log(game);
+  var lat_long = [];
+  request.post(ipAddr+":"+PORT+"/datacenter/forid")
+        .set({gameID: game})
+        .end((res) => {
+          if (!res.success) {
+            //todo error
+          } else {
+            var data = JSON.parse(res.body);
+            lat_long.push(data.latitude);
+            lat_long.push(data.longitude);
+            event.sender.send("game-selected-reply", lat_long);
+          }
+        });
+  });
+
+ipcMain.on("region-selected", (event, game, region) => {
+  console.log(regionID);
+  request.post(ipAddr+":"+PORT+"datacenter/forid")
+        .set({gameID : game, regionID : region})
+        .end((res) => {
+          if (!(res.success)) {
+            //todo error
+          } else {
+            var data = JSON.parse(res.body);
+            event.sender.send("region-selected-reply", data.ipAddr);
+          }
+        })
+})
+
+ipcMain.on('test', (event, pingAddr) => {
+  console.log(pingAddr);
   var ping_traceroute = [];
-  ping.promise.probe(arg)
+  ping.promise.probe(pingAddr)
     .then(function (res) {
       ping_traceroute.push(res);
       const tracer = new traceroute();
@@ -193,7 +225,7 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
 });
 
 
-request.post("http://ip-api.com/json/143.215.194.109")
+/*request.post("http://ip-api.com/json/")
   .set("accept", "json")
   .end((err,res) => {
     if(err) {
@@ -201,5 +233,5 @@ request.post("http://ip-api.com/json/143.215.194.109")
     }
     //res always json
     isp = res.body.isp;
-    //console.log(res.body);
-  });
+    //console.log(isp);
+  }); */ 

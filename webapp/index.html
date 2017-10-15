@@ -85,11 +85,11 @@
           		<div class="field has-addons has-addons-centered">
           			<p class="control">
             				<div class="select is-white">
-              				<select>
+              				<select id = "game_dropdown" onchange = "handleGame();">
                 					<option>Select game</option>
-                					<option>ffxiv</option>      					
-                					<option>wow</option>
-                					<option>cs:go</option>
+                					<option value = "1">League of Legends</option>      					
+                					<option value = "2">Dota 2</option>
+                					<option value = "3">CounterStrike: Global Offensive</option>
               				</select>
             				</div>
           			</p>
@@ -98,11 +98,12 @@
           		<div class="field has-addons has-addons-centered">
           			<p class="control">
             				<div class="select is-white">
-              				<select>
+              				<select id = "region_dropdown" onchange = "handleRegion();">
                 					<option>Select server/datacenter</option>
-                					<option>ip 1</option>
-                					<option>ip 3</option>
-                					<option>ip 3</option>
+                					<option value = "1">NA Northeast</option>
+                					<option value = "2">NA Southeast</option>
+                					<option value = "3">NA Midwest</option>
+                          <option value = "4">EU West</option>
               				</select>
             				</div>
           			</p>
