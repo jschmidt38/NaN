@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         el.classList.remove('is-paused');
     });
 
-    document.querySelector("#nse")
+    document.querySelector("#nsw")
         .addEventListener("click", function () {
         el.classList.remove('is-paused');
     });
