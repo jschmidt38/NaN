@@ -13,10 +13,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
     document.querySelector("#login")
         .addEventListener("click", function () {
-        ipc.send("load-login");
+        //ipc.send("load-login");
+
     });
 
-    document.querySelector("#pingchart")
+    tippy('#login', {
+        html: document.querySelector('#insideDivLogin'),
+        arrow: true,
+        animation: 'fade',
+        trigger: 'click'
+    })
+
+    /*document.querySelector("#pingchart")
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
     });
@@ -24,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#home")
         .addEventListener("click", function () {
         ipc.send("load-home");
-    });
+    });*/
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
