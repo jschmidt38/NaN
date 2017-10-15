@@ -123,15 +123,47 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// function fade(element) {
-//     var op = 1;  // initial opacity
-//     var timer = setInterval(function () {
-//         if (op <= 0.1){
-//             clearInterval(timer);
-//             element.style.display = 'none';
-//         }
-//         element.style.opacity = op;
-//         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-//         op -= op * 0.1;
-//     }, 50);
-// }
+var modal = document.querySelector('.modal');  
+var html = document.querySelector('html');
+
+document.querySelector('#lol').addEventListener('click', function(event) {
+  event.preventDefault();
+  modal = document.querySelector('.modal');  
+  html = document.querySelector('html');
+  modal.classList.add('is-active');
+  html.classList.add('is-clipped');
+
+  modal.querySelector('#exit').addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+  });
+});
+
+document.querySelector('#ffxiv').addEventListener('click', function(event) {
+  event.preventDefault();
+  modal = document.querySelector('.modal');  
+  html = document.querySelector('html');
+  modal.classList.add('is-active');
+  html.classList.add('is-clipped');
+
+  modal.querySelector('#exit').addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+  });
+});
+
+document.querySelector('#wow').addEventListener('click', function(event) {
+  event.preventDefault();
+  modal = document.querySelector('.modal');  
+  html = document.querySelector('html');
+  modal.classList.add('is-active');
+  html.classList.add('is-clipped');
+
+  modal.querySelector('#exit').addEventListener('click', function(e) {
+    e.preventDefault();
+    modal.classList.remove('is-active');
+    html.classList.remove('is-clipped');
+  });
+});
