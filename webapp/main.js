@@ -75,25 +75,25 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 
-ipcMain.on('load-login', function () {
-  if (loginWindow) {
-      return;
-  }
+// ipcMain.on('load-login', function () {
+//   if (loginWindow) {
+//       return;
+//   }
 
-  loginWindow = new BrowserWindow({
-      height: 200,
-      resizable: false,
-      width: 200
-  });
+//   loginWindow = new BrowserWindow({
+//       height: 200,
+//       resizable: false,
+//       width: 200
+//   });
 
-  loginWindow.setMenu(null);
+//   loginWindow.setMenu(null);
 
-  loginWindow.loadUrl('file://' + __dirname + '../webapp/login.html');
+//   loginWindow.loadUrl('file://' + __dirname + '../webapp/login.html');
 
-  loginWindow.on('closed', function () {
-      loginWindow = null;
-  });
-});
+//   loginWindow.on('closed', function () {
+//       loginWindow = null;
+//   });
+// });
 
 ipcMain.on('load-pingchart', function () {
   
