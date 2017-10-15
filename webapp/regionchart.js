@@ -12,7 +12,8 @@ var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
 var btn = document.querySelector('.js-btn');
-var el = document.querySelector('.js-fade');
+var el = document.querySelector('#col2');
+var el2 = document.querySelector('#col3');
 
 var loginButton = document.querySelector("#login");
 var regButton = document.querySelector("#register");
@@ -119,6 +120,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
       el.classList.remove('is-paused');
   });
 
+  // more fade listners
+
+  document.querySelector("#lol")
+      .addEventListener("click", function () {
+      el2.classList.remove('is-paused');
+  });
+
   document.querySelector("#twitter")
       .addEventListener("click", function () {
       shell.openExternal("https://twitter.com/RandalfTheGreat");
@@ -151,35 +159,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-document.querySelector('#lol').addEventListener('click', function(event) {
-  event.preventDefault();
-  modal = document.querySelector('.modal');  
-  html = document.querySelector('html');
-  modal.classList.add('is-active');
-  html.classList.add('is-clipped');
-
-  modal.querySelector('#exit').addEventListener('click', function(e) {
-    e.preventDefault();
-    modal.classList.remove('is-active');
-    html.classList.remove('is-clipped');
-  });
-});
-
-document.querySelector('#ffxiv').addEventListener('click', function(event) {
-  event.preventDefault();
-  modal = document.querySelector('.modal');  
-  html = document.querySelector('html');
-  modal.classList.add('is-active');
-  html.classList.add('is-clipped');
-
-  modal.querySelector('#exit').addEventListener('click', function(e) {
-    e.preventDefault();
-    modal.classList.remove('is-active');
-    html.classList.remove('is-clipped');
-  });
-});
-
-document.querySelector('#wow').addEventListener('click', function(event) {
+document.querySelector('#na').addEventListener('click', function(event) {
   event.preventDefault();
   modal = document.querySelector('.modal');  
   html = document.querySelector('html');
