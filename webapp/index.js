@@ -27,7 +27,7 @@ var mapBox = document.querySelector("#mapDiv");
 
 var modal = null;  
 var html = null;
-
+ipc.emit("tokenManage");
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
-
+  ipc.emit("tokenManage");
 });
 
 var map;
