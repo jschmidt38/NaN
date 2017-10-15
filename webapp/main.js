@@ -2,6 +2,8 @@ const electron = require('electron');
 var {app, BrowserWindow, ipcMain} = electron;
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
+const request = require('superagent');
+var isp;
 
 // Module to control application life.
 //const app = electron.app
@@ -169,3 +171,15 @@ function login(error, msg,tok){
           //res is always in json
   });
 }
+
+
+request.post("http://ip-api.com/json")
+  .set("accept", "json")
+  .end((err,res) => {
+    if(err) {
+      //
+    }
+    //res always json
+    isp = res.body.isp;
+    console.log(isp);
+  });

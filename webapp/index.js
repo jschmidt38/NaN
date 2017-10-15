@@ -31,10 +31,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
 	ping.addEventListener("click", function(event,arg) {
-		console.log("clicked");
 		ipc.send("test", "204.2.229.9");
 	});
-	console.log("loaded");
 });
 
 ipc.on("test-reply", (event, arg) => {
