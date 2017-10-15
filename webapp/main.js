@@ -1,5 +1,5 @@
-const electron = require('electron');  
-var {app, BrowserWindow, ipcMain} = electron;
+const electron = require('electron');
+var { app, BrowserWindow, ipcMain } = electron;
 var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
@@ -26,11 +26,11 @@ let mainWindow
 var loginWindow = null;
 var pingchartWindow = null;
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1024, 
-    height: 768, 
+    width: 1024,
+    height: 768,
     frame: true,
     icon: path.join(__dirname, 'img/icons/64x64.png')
   })
@@ -102,150 +102,172 @@ app.on('activate', function () {
 // });
 
 ipcMain.on('load-pingchart', function () {
-  
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'pingchart.html'),
     protocol: 'file:',
     slashes: true
-  })) 
+  }))
 
 });
 
 ipcMain.on('load-home', function () {
-  
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true
-  })) 
+  }))
 
 });
 
 ipcMain.on('load-regionchart', function () {
-  
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'regionchart.html'),
     protocol: 'file:',
     slashes: true
-  })) 
+  }))
 
 });
 
 ipcMain.on("game-selected", (event, game) => {
 
   var lat_long = [];
-  request.post(ipAddr+":"+PORT+"/datacenters/forgame")
-        .set({id: game})
-        .end((err, res) => {
-          //console.log(res.text);
-          if (err) {
-            //todo error
-          } else {
-            var data = JSON.parse(res.text);
-            //lat_long.push(data.latitude);
-            //lat_long.push(data.longitude);
-            event.sender.send("game-selected-reply", data);
-          }
-        });
-  });
+  request.post(ipAddr + ":" + PORT + "/datacenters/forgame")
+    .set({ id: game })
+    .end((err, res) => {
+      //console.log(res.text);
+      if (err) {
+        //todo error
+      } else {
+        var data = JSON.parse(res.text);
+        //lat_long.push(data.latitude);
+        //lat_long.push(data.longitude);
+        event.sender.send("game-selected-reply", data);
+      }
+    });
+});
 
 ipcMain.on("datacenter-selected", (event, datacenter) => {
   console.log(datacenter);
-  request.post(ipAddr+":"+PORT+"/datacenters/forid")
-        .set({id: datacenter})
-        .end((err, res) => {
-          var data = JSON.parse(res.text);
-          if (!data.success) {
-            //todo error
-          } else {
-            console.log(data);
-            event.sender.send("datacenter-selected-reply", data.ipAddr);
-          }
-        });
+  request.post(ipAddr + ":" + PORT + "/datacenters/forid")
+    .set({ id: datacenter })
+    .end((err, res) => {
+      var data = JSON.parse(res.text);
+      if (!data.success) {
+        //todo error
+      } else {
+        console.log(data);
+        event.sender.send("datacenter-selected-reply", data.ipAddr);
+      }
+    });
 });
 
 ipcMain.on('test', (event, pingAddr) => {
   console.log(pingAddr);
   var ping_traceroute = [];
-  ping.promise.probe(pingAddr)
-    .then(function (res) {
-      ping_traceroute.push(res);
-      const tracer = new traceroute();
-      var count = 0;
-      tracer.on('destination', (destination) => {
-                //console.log(`destination: ${destination}`);
-            })
-            .on('hop', (hop) => {
-                //console.log(`hop: ${JSON.stringify(hop)}`);
-                count++;
-            })
-            .on('close', (code) => {
-                //console.log(`close: code ${code}`);
-                ping_traceroute.push(count);
-                event.sender.send('test-reply', ping_traceroute);
-            });
-      tracer.trace(res.host);
-    });
+
+  const tracer = new traceroute();
+  var timeoutCount, rtt1, rtt2, rtt3, count = 0;
+  var rtt1S, rtt2S, rtt3S;
+  tracer.on('hop', (hop) => {
+    console.log(`hop: ${JSON.stringify(hop)}`);
+    if (hop.rtt1 === "*") {
+      timeoutCount++;
+    } else {
+      count++;
+      rtt1S = hop.rtt1;
+      rtt2S = hop.rtt2;
+      rtt3S = hop.rtt3;
+      rtt1S = rtt1S.substring(0, rtt1S.indexOf(" "));
+      rtt2S = rtt2S.substring(0, rtt2S.indexOf(" "));
+      rtt3S = rtt3S.substring(0, rtt3S.indexOf(" "));
+      timeoutCount = 0;
+    }
+   
+    if (timeoutCount == 3) {
+      //somehow break out of this
+      var sum = parseInt(rtt1S, 10) + parseInt(rtt2S, 10) + parseInt(rtt3S);
+      var divided = sum / 3;
+      var avg = Math.trunc(divided);
+
+      ping_traceroute.push(avg);
+      ping_traceroute.push(count);
+      event.sender.send('test-reply', ping_traceroute);
+      return;
+    }
+  }).on('close', (code) => {
+    //console.log(`close: code ${code}`);
+    var sum = parseInt(rtt1S, 10) + parseInt(rtt2S, 10) + parseInt(rtt3S);
+    var divided = sum / 3;
+    var avg = Math.trunc(divided);
+    ping_traceroute.push(avg);
+    ping_traceroute.push(count);
+    event.sender.send('test-reply', ping_traceroute);
+  });
+  tracer.trace(pingAddr);
+
 });
 
 //Post register data
 //implement verification + end case in the future
-ipcMain.on("login",(event,emailGiven, passwordGiven) => {
-  request.post(ipAddr+":"+PORT+"/user/login")
-        .set({email: emailGiven, password: passwordGiven})
-        .end((err,res) => {
-          if(err) {
-            // alert("Oh no! Login error");
-            console.log(err);
-           }
-           //res is always in json
-           else{
-             var data = JSON.parse(res.text);
-             console.log(data.success);
-             if(data.success){
-              token = data.token;
-              console.log("token is "+token);
-            }
-           }
+ipcMain.on("login", (event, emailGiven, passwordGiven) => {
+  request.post(ipAddr + ":" + PORT + "/user/login")
+    .set({ email: emailGiven, password: passwordGiven })
+    .end((err, res) => {
+      if (err) {
+        // alert("Oh no! Login error");
+        console.log(err);
+      }
+      //res is always in json
+      else {
+        var data = JSON.parse(res.text);
+        console.log(data.success);
+        if (data.success) {
+          token = data.token;
+          console.log("token is " + token);
+        }
+      }
 
-        });
+    });
 });
 
-ipcMain.on("register",(event, emailGiven, passwordGiven) => {
-  request.post(ipAddr+":"+PORT+"/user/register")
-        .set({email: emailGiven, password: passwordGiven})
-        .end((err,res) => {
-          if(err) {
-           // alert("Oh no! Login error");
-           console.log(err);
-          }
-          //res is always in json
-          else{
-            var data = JSON.parse(res.text);
-            if(data.success){
-              token = data.token;
-              console.log("token is "+token);
-            }
-          }
+ipcMain.on("register", (event, emailGiven, passwordGiven) => {
+  request.post(ipAddr + ":" + PORT + "/user/register")
+    .set({ email: emailGiven, password: passwordGiven })
+    .end((err, res) => {
+      if (err) {
+        // alert("Oh no! Login error");
+        console.log(err);
+      }
+      //res is always in json
+      else {
+        var data = JSON.parse(res.text);
+        if (data.success) {
+          token = data.token;
+          console.log("token is " + token);
+        }
+      }
 
-  });
+    });
 });
 
 
 
-  
-ipcMain.on("gamePop",(event,arg) => {
-  request.get(ipAddr+":"+PORT+"/games/all", function(err,res){
-          if(err) {
-           // alert("Oh no! Login error");
-           console.log(err);
-          }
-          //res is always in json
-          else{
-            var data = JSON.parse(res.text);
-            event.sender.send("gamesReturn", data);
-            
-          }
+
+ipcMain.on("gamePop", (event, arg) => {
+  request.get(ipAddr + ":" + PORT + "/games/all", function (err, res) {
+    if (err) {
+      // alert("Oh no! Login error");
+      console.log(err);
+    }
+    //res is always in json
+    else {
+      var data = JSON.parse(res.text);
+      event.sender.send("gamesReturn", data);
+
+    }
 
   });
 });
