@@ -23,6 +23,8 @@ func startHTTPServer() {
 	http.HandleFunc("/datacenters/forid", dataCenterForIDHandler)
 	http.HandleFunc("/datacenters/forgame", dataCenterForGameHandler)
 
+	http.HandleFunc("/test/post", postResultsHandler)
+
 	go http.ListenAndServe(":8080", nil)
 	fmt.Println("HTTP server listening on port 8080")
 }
