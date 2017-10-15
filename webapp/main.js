@@ -27,7 +27,12 @@ var pingchartWindow = null;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1024, height: 768, frame: true})
+  mainWindow = new BrowserWindow({
+    width: 1024, 
+    height: 768, 
+    frame: true,
+    icon: path.join(__dirname, 'img/icons/64x64.png')
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
