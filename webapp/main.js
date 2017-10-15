@@ -4,6 +4,9 @@ var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
 var isp;
+var token = null;
+var status = false; //log in status
+var userName = null;
 
 // Module to control application life.
 //const app = electron.app
@@ -167,10 +170,12 @@ ipcMain.on("login",(event,emailGiven, passwordGiven) => {
            }
            //res is always in json
            else{
-
-
-             var data = JSON.parse(res.body);
-
+             var data = JSON.parse(res.text);
+             console.log(data.success);
+             if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
            }
 
         });
@@ -186,8 +191,11 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
           }
           //res is always in json
           else{
-            var data = res.body;
-            console.log(body);
+            var data = JSON.parse(res.text);
+            if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
           }
 
   });
