@@ -23,6 +23,11 @@ var greetingString = document.querySelector("#greeting");
 var datacenterDropdown = document.querySelector("#serverDiv");
 var pingButton = document.querySelector("#pingDiv");
 
+var mapBox = document.querySelector("#mapDiv");
+
+var modal = null;  
+var html = null;
+ipc.emit("tokenManage");
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -87,10 +92,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         trigger: 'click'
     })
 
-    document.querySelector("#pingchart")
-        .addEventListener("click", function () {
-        ipc.send("load-pingchart");
-    });
+    // document.querySelector("#pingchart")
+    //     .addEventListener("click", function () {
+    //     ipc.send("load-pingchart");
+    // });
 
     document.querySelector("#regionchart")
         .addEventListener("click", function () {
@@ -157,6 +162,19 @@ ipc.on("test-reply", (event, pingResults) => {
 
 	var ping = document.querySelector("#ping");
 	ping.classList.remove('is-loading');
+
+	modal = document.querySelector('.modal');  
+	html = document.querySelector('html');
+	modal.classList.add('is-active');
+	html.classList.add('is-clipped');
+	mapBox.classList.add('is-paused');
+
+	modal.querySelector('#exit').addEventListener('click', function(e) {
+		e.preventDefault();
+		modal.classList.remove('is-active');
+		html.classList.remove('is-clipped');
+		mapBox.classList.remove('is-paused');
+	});
 	
 });
 
@@ -183,7 +201,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
-
+  ipc.emit("tokenManage");
 });
 
 var map;

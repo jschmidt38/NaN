@@ -28,9 +28,9 @@
 
           <div id="navMenuTransparentExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item " id="pingchart">
+                <!-- <a class="navbar-item " id="pingchart">
                   Ping Chart
-                </a>
+                </a> -->
                 <a class="navbar-item " id="regionchart">
                   Region Chart
                 </a>
@@ -148,11 +148,13 @@
               <div class="tile is-parent">
                 <article class="tile is-child notification is-primary is-bold">
                   <div class="leftbuffer">
-                    <section class="hero is-dark is-large is-bold">
-                      <div class="hero-body"  id ="myMap">
-                        Loading map, please be patient...
-                      </div>
-                    </section>
+                    <div class='js-fade fade-in' id="mapDiv">
+                      <section class="hero is-dark is-large is-bold">
+                        <div class="hero-body"  id ="myMap">
+                          Loading map, please be patient...
+                        </div>
+                      </section>
+                    </div>
                   </div>
           			</div>
         			</div>
@@ -164,6 +166,21 @@
   		</section>
 
 	  </section>
+
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Trace Route Data</p>
+          <button class="delete" aria-label="close" id="exit"></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+        </section>
+        <footer class="modal-card-foot">
+        </footer>
+      </div>
+    </div>
     
     <div id="divLogin" style="display:none;">
         <div id="insideDivLogin">

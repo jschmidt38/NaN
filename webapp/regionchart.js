@@ -24,7 +24,7 @@ var html = null;
 // btn.addEventListener('click', function(e){
 //   el.classList.remove('is-paused');
 // });
-
+ipc.emit("tokenManage");
 document.addEventListener("DOMContentLoaded", function(event) { 
 
   ipc.on("loginSwap", (event, arg) => {
@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       greetingString.style.display = '';
     }
   });
+  ipc.emit("tokenManage");
 
   document.querySelector("#truelogin")
       .addEventListener("click", function () {
@@ -72,10 +73,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       ipc.send("load-home");
   });
 
-  document.querySelector("#pingchart")
-      .addEventListener("click", function () {
-      ipc.send("load-pingchart");
-  });
+  // document.querySelector("#pingchart")
+  //     .addEventListener("click", function () {
+  //     ipc.send("load-pingchart");
+  // });
 
   //fade listeners
   document.querySelector("#nne")
@@ -125,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-
+  ipc.emit("tokenManage");
   // Get all "navbar-burger" elements
   var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
