@@ -13,6 +13,18 @@ var regButton = document.querySelector("#register");
 var greetingString = document.querySelector("#greeting");
 
 document.addEventListener("DOMContentLoaded", function(event) { 
+
+	ipc.on("loginSwap", (event, arg) => {
+    	if (arg == null) {
+    		loginButton.style.display = '';
+    		regButton.style.display = '';
+    		greetingString.style.display = 'none';
+    	} else {
+    		loginButton.style.display = 'none';
+    		regButton.style.display = 'none';
+    		greetingString.style.display = '';
+    	}
+    });
 	
     document.querySelector("#truelogin")
         .addEventListener("click", function () {

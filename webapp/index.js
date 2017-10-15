@@ -20,6 +20,9 @@ var loginButton = document.querySelector("#login");
 var regButton = document.querySelector("#register");
 var greetingString = document.querySelector("#greeting");
 
+var datacenterDropdown = document.querySelector("#serverDiv");
+var pingButton = document.querySelector("#pingDiv");
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -43,13 +46,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     ipc.on("loginSwap", (event, arg) => {
     	if (arg == null) {
-    		loginButton.styleList.remove("display: none");
-    		regButton.styleList.remove("display: none");
-    		greetingString.styleList.add("display: none");
+    		loginButton.style.display = '';
+    		regButton.style.display = '';
+    		greetingString.style.display = 'none';
     	} else {
-    		loginButton.styleList.add("display: none");
-    		regButton.styleList.add("display: none");
-    		greetingString.styleList.remove("display: none");
+    		loginButton.style.display = 'none';
+    		regButton.style.display = 'none';
+    		greetingString.style.display = '';
     	}
     });
 
@@ -105,6 +108,7 @@ function handleGame() {
 	console.log("reached Game");
 	gameID = document.getElementById("game_dropdown").value;
 	ipc.send("game-selected", gameID);
+	datacenterDropdown.classList.remove('is-paused');
 }
 
 ipc.on("game-selected-reply", function(event, dataCenterLocs) {
@@ -115,6 +119,7 @@ function handleDataCenter() {
 	console.log("reached Datacenter");
 	var val = document.getElementById("datacenter_dropdown").value;
 	ipc.send("datacenter-selected", val);
+	pingButton.classList.remove('is-paused');
 }
 
 ipc.on("datacenter-selected-reply", (event, data) => {

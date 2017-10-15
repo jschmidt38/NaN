@@ -26,90 +26,102 @@ var html = null;
 // });
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-	
-    document.querySelector("#truelogin")
-        .addEventListener("click", function () {
-        //ipc.send("load-login");
-        console.log("Login clicked");
 
-    });
+  ipc.on("loginSwap", (event, arg) => {
+    if (arg == null) {
+      loginButton.style.display = '';
+      regButton.style.display = '';
+      greetingString.style.display = 'none';
+    } else {
+      loginButton.style.display = 'none';
+      regButton.style.display = 'none';
+      greetingString.style.display = '';
+    }
+  });
 
-    document.querySelector("#trueregister")
-        .addEventListener("click", function () {
-        //ipc.send("load-login");
-        console.log("Register clicked");
+  document.querySelector("#truelogin")
+      .addEventListener("click", function () {
+      //ipc.send("load-login");
+      console.log("Login clicked");
 
-    });
+  });
 
-    tippy('#login', {
-        html: document.querySelector('#insideDivLogin'),
-        arrow: true,
-        animation: 'fade',
-        trigger: 'click'
-    })
+  document.querySelector("#trueregister")
+      .addEventListener("click", function () {
+      //ipc.send("load-login");
+      console.log("Register clicked");
 
-    tippy('#register', {
-        html: document.querySelector('#insideDivRegister'),
-        arrow: true,
-        animation: 'fade',
-        trigger: 'click'
-    })
+  });
 
-    document.querySelector("#home")
-        .addEventListener("click", function () {
-        ipc.send("load-home");
-    });
+  tippy('#login', {
+      html: document.querySelector('#insideDivLogin'),
+      arrow: true,
+      animation: 'fade',
+      trigger: 'click'
+  })
 
-    document.querySelector("#pingchart")
-        .addEventListener("click", function () {
-        ipc.send("load-pingchart");
-    });
+  tippy('#register', {
+      html: document.querySelector('#insideDivRegister'),
+      arrow: true,
+      animation: 'fade',
+      trigger: 'click'
+  })
 
-    //fade listeners
-    document.querySelector("#nne")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#home")
+      .addEventListener("click", function () {
+      ipc.send("load-home");
+  });
 
-    document.querySelector("#nse")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#pingchart")
+      .addEventListener("click", function () {
+      ipc.send("load-pingchart");
+  });
 
-    document.querySelector("#nmw")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  //fade listeners
+  document.querySelector("#nne")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#nnw")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#nse")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#nsw")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#nmw")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#ee")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#nnw")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#ew")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#nsw")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#oce")
-        .addEventListener("click", function () {
-        el.classList.remove('is-paused');
-    });
+  document.querySelector("#ee")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
 
-    document.querySelector("#twitter")
-        .addEventListener("click", function () {
-        shell.openExternal("https://twitter.com/RandalfTheGreat");
-    });
+  document.querySelector("#ew")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
+
+  document.querySelector("#oce")
+      .addEventListener("click", function () {
+      el.classList.remove('is-paused');
+  });
+
+  document.querySelector("#twitter")
+      .addEventListener("click", function () {
+      shell.openExternal("https://twitter.com/RandalfTheGreat");
+  });
 });
 
 document.addEventListener('DOMContentLoaded', function () {

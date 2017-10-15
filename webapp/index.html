@@ -93,7 +93,8 @@
                 		</div>
                 		<div class="field has-addons has-addons-centered">
                 			<p class="control">
-                  				<div class="select is-white" style="display: none;">
+                        <div class='js-fade fade-in is-paused' id="serverDiv">
+                  				<div class="select is-white">
                     				<select id = "datacenter_dropdown" onchange = "handleDataCenter();">
                       					<option>Select server/datacenter</option>
                       					<option>ip 1</option>
@@ -101,13 +102,20 @@
                       					<option>ip 3</option>
                     				</select>
                   				</div>
+                        </div>
                 			</p>
                 		</div>
 
                 		<div class="field has-addons has-addons-centered">
-                  			<div class="control" style="display: none;">
-                    			<button class="button is-link" id="ping">Ping</button>
+                      <div class='js-fade fade-in is-paused' id="pingDiv">
+                  			<div class="control">
+                    			<button class="button is-link" id="ping">
+                            <h2>
+                              PING
+                            </h2>
+                          </button>
                   			</div>
+                      </div>
                 		</div>
                   </article>
                 </div>
@@ -125,7 +133,7 @@
                   <a class="navbar-item">
                     <div class="tile is-ancestor">
                       <div class="tile is-parent">
-                        <article class="tile is-child notification is-dark is-bold">
+                        <article class="tile is-child notification is-info is-bold">
                           <h1 class="title has-text-centered">
                             Data Center Map
                           </h1>
