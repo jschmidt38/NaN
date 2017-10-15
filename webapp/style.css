@@ -14,3 +14,16 @@ body::-webkit-scrollbar {
 .topbuffer {
     padding-top: 20px;
 }
+
+.gradient {
+  background-image:
+    linear-gradient(
+    	to top right,
+      blue, #5760e3
+    );
+}
+
+/*body {
+    background-image: url("img/bg_ishgard.jpg");
+    background-color: #cccccc;
+}*/

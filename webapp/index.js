@@ -13,8 +13,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
     document.querySelector("#login")
         .addEventListener("click", function () {
-        ipc.send("load-login");
+        //ipc.send("load-login");
+
     });
+
+    tippy('#login', {
+        html: document.querySelector('#insideDivLogin'),
+        arrow: true,
+        animation: 'fade',
+        trigger: 'click'
+    })
 
     document.querySelector("#pingchart")
         .addEventListener("click", function () {
@@ -31,10 +39,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
 	ping.addEventListener("click", function(event,arg) {
-		console.log("clicked");
 		ipc.send("test", "204.2.229.9");
 	});
-	console.log("loaded");
 });
 
 ipc.on("test-reply", (event, arg) => {
