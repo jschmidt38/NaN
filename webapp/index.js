@@ -90,10 +90,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         trigger: 'click'
     })
 
-    document.querySelector("#pingchart")
-        .addEventListener("click", function () {
-        ipc.send("load-pingchart");
-    });
+    // document.querySelector("#pingchart")
+    //     .addEventListener("click", function () {
+    //     ipc.send("load-pingchart");
+    // });
 
     document.querySelector("#regionchart")
         .addEventListener("click", function () {
