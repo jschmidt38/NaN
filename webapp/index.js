@@ -23,6 +23,8 @@ var greetingString = document.querySelector("#greeting");
 var datacenterDropdown = document.querySelector("#serverDiv");
 var pingButton = document.querySelector("#pingDiv");
 
+var mapBox = document.querySelector("#mapDiv");
+
 var modal = null;  
 var html = null;
 
@@ -90,10 +92,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         trigger: 'click'
     })
 
-    document.querySelector("#pingchart")
-        .addEventListener("click", function () {
-        ipc.send("load-pingchart");
-    });
+    // document.querySelector("#pingchart")
+    //     .addEventListener("click", function () {
+    //     ipc.send("load-pingchart");
+    // });
 
     document.querySelector("#regionchart")
         .addEventListener("click", function () {
@@ -166,10 +168,13 @@ ipc.on("test-reply", (event, pingResults) => {
 	modal.classList.add('is-active');
 	html.classList.add('is-clipped');
 
+	mapBox.classList.add('is-paused');
+
 	modal.querySelector('#exit').addEventListener('click', function(e) {
 		e.preventDefault();
 		modal.classList.remove('is-active');
 		html.classList.remove('is-clipped');
+		mapBox.classList.remove('is-paused');
 	});
 	
 });
