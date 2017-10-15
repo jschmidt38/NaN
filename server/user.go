@@ -84,6 +84,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(b)
 }
 
+// todo: handle resolving of ip address
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	var resp *userResponse
 	email := r.Header.Get("email")
