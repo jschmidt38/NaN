@@ -96,13 +96,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function handleGame() {
 	console.log("reached Game");
-	gameID = document.getElementById("game_dropdown").value;
-	ipc.send("game-selected", gameID);
+    gameID = document.getElementById("game_dropdown").value;
+    if(gameID !=null){
+	    ipc.send("game-selected", gameID);
+    }
 }
 
-ipc.on("game-selected-reply", function(event, dataCenterLocs) {
+var datacenter_drop = document.querySelector("#datacenter_dropdown");
+ipc.on("game-selected-reply", function(event, arg) {
+
+
+    var  dataCenterList = arg.dataCenters;
+    console.log(dataCenterList);
+    for(var i = 0; i <  dataCenterList.length; i++)  {
+        var opt = document.createElement("option");
+        var x =  dataCenterList[i].dataCenterID;
+        var y =  dataCenterList[i].centerName;
+        opt.value = x;
+        opt.innerHTML = y;
+        datacenter_drop.appendChild(opt);
+
 	//update map display
-})
+};});
 
 function handleDataCenter() {
 	console.log("reached Datacenter");
