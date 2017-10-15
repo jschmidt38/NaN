@@ -23,6 +23,7 @@
     "nodejs-traceroute": "^1.1.1",
     "ping": "^0.2.2",
     "popper.js": "^1.12.5",
+    "superagent": "^3.6.3",
     "tippy.js": "^1.3.0",
     "tooltip.js": "^1.1.5"
   }

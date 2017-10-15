@@ -14,11 +14,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#truelogin")
         .addEventListener("click", function () {
         //ipc.send("load-login");
+        console.log("Login clicked");
 
     });
 
     tippy('#login', {
-        html: document.querySelector('#truelogin'),
+        html: document.querySelector('#insideDivLogin'),
         arrow: true,
         animation: 'fade',
         trigger: 'click'
