@@ -4,6 +4,9 @@ var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
 var isp;
+var token = null;
+var status = false; //log in status
+var userName = null;
 
 // Module to control application life.
 //const app = electron.app
@@ -16,8 +19,6 @@ const url = require('url')
 //to reach databasee
 var ipAddr = "104.45.146.84";
 var PORT = "8080";
-
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -130,13 +131,45 @@ ipcMain.on('load-regionchart', function () {
 
 });
 
-ipcMain.on('test', (event, arg) => {
-  console.log(arg);
+ipcMain.on("game-selected", (event, game) => {
+
+  var lat_long = [];
+  request.post(ipAddr+":"+PORT+"/datacenters/forgame")
+        .set({id: game})
+        .end((err, res) => {
+          //console.log(res.text);
+          if (err) {
+            //todo error
+          } else {
+            var data = JSON.parse(res.text);
+            //lat_long.push(data.latitude);
+            //lat_long.push(data.longitude);
+            event.sender.send("game-selected-reply", data);
+          }
+        });
+  });
+
+ipcMain.on("datacenter-selected", (event, datacenter) => {
+  console.log(datacenter);
+  request.post(ipAddr+":"+PORT+"/datacenters/forid")
+        .set({id: datacenter})
+        .end((err, res) => {
+          var data = JSON.parse(res.text);
+          if (!data.success) {
+            //todo error
+          } else {
+            console.log(data);
+            event.sender.send("datacenter-selected-reply", data.ipAddr);
+          }
+        });
+});
+
+ipcMain.on('test', (event, pingAddr) => {
+  console.log(pingAddr);
   var ping_traceroute = [];
-  ping.promise.probe(arg)
+  ping.promise.probe(pingAddr)
     .then(function (res) {
       ping_traceroute.push(res);
-      console.log("starting tracert");
       const tracer = new traceroute();
       var count = 0;
       tracer.on('destination', (destination) => {
@@ -158,11 +191,8 @@ ipcMain.on('test', (event, arg) => {
 //Post register data
 //implement verification + end case in the future
 ipcMain.on("login",(event,emailGiven, passwordGiven) => {
-console.log(emailGiven+passwordGiven)
-
   request.post(ipAddr+":"+PORT+"/user/login")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept", "json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
             // alert("Oh no! Login error");
@@ -170,7 +200,12 @@ console.log(emailGiven+passwordGiven)
            }
            //res is always in json
            else{
-             console.log(res);
+             var data = JSON.parse(res.text);
+             console.log(data.success);
+             if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
            }
 
         });
@@ -178,8 +213,7 @@ console.log(emailGiven+passwordGiven)
 
 ipcMain.on("register",(event, emailGiven, passwordGiven) => {
   request.post(ipAddr+":"+PORT+"/user/register")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept","json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
            // alert("Oh no! Login error");
@@ -187,20 +221,31 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
           }
           //res is always in json
           else{
-            console.log(res);
+            var data = JSON.parse(res.text);
+            if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
           }
 
   });
 });
 
 
-request.post("http://ip-api.com/json")
-  .set("accept", "json")
-  .end((err,res) => {
-    if(err) {
-      alert("Oh no! ISP Lookup error");
-    }
-    //res always json
-    isp = res.body.isp;
-    console.log(isp);
+
+  
+ipcMain.on("gamePop",(event,arg) => {
+  request.get(ipAddr+":"+PORT+"/games/all", function(err,res){
+          if(err) {
+           // alert("Oh no! Login error");
+           console.log(err);
+          }
+          //res is always in json
+          else{
+            var data = JSON.parse(res.text);
+            event.sender.send("gamesReturn", data);
+            
+          }
+
   });
+});

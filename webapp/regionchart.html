@@ -32,18 +32,13 @@
                   <a class="navbar-item is-bold" id="pingchart">
                     Ping Chart
                   </a>
-                  <a class="navbar-item ">
+                  <a class="button is-info ">
                     Region Chart
                   </a>
               </div>
 
               <div class="navbar-end">
-                <a class="navbar-item is-hidden-desktop-only" href="https://github.com/jgthms/bulma" target="_blank">
-                  <span class="icon" style="color: #333;">
-                    <i class="fa fa-lg fa-github"></i>
-                  </span>
-                </a>
-                <a class="navbar-item is-hidden-desktop-only" href="https://twitter.com/jgthms" target="_blank">
+                <a class="navbar-item is-hidden-desktop-only" id="twitter" target="_blank">
                   <span class="icon" style="color: #55acee;">
                     <i class="fa fa-lg fa-twitter"></i>
                   </span>
@@ -54,15 +49,17 @@
                       <a class="bd-tw-button button"
                         data-social-network="Twitter"
                         data-social-action="tweet"
-                        data-social-target="http://bulma.io"
                         target="_blank"
-                        href="https://twitter.com/intent/tweet?text=Bulma: a modern CSS framework based on Flexbox&hashtags=bulmaio&url=http://bulma.io&via=jgthms">
+                        href="https://twitter.com/intent/tweet?text=Nanalysis: a better network analysis tool&hashtags=nanalysis&via=RandalfTheGreat">
                         <span>
                           Tweet
                         </span>
                       </a>
 
-                  </p>
+                    </p>
+                  <h1 style="display: none;" id="greeting">
+                    Good Afternoon, User.
+                  </h1>
                   <p class="control">
                     <a class="button is-primary" data-interactive="true" id="login">
                       <span>Login</span>
@@ -92,63 +89,98 @@
                 Data from {{ startDate }} to {{ currentDay }}
             </h2>
 
-              <table class="table is-fullwidth is-primary">
-                <thead>
-                  <tr>
-                    <th>Region</th>
-                    <th>Data Per Game</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th>NA Northeast</th>
-                    <th>
-                    </th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>NA Southeast</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>NA Midwest</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>NA Northwest</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>NA Southeast</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>EU East</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>EU West</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-                <tbody>
-                  <tr>
-                    <th>OCE</th>
-                    <th>1</th>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="columns is-primary">
+              <div class="column is-primary">
+                <table class="table is-fullwidth is-primary is-bordered is-striped has-text-centered">
+                  <thead>
+                    <tr>
+                      <th>Select Region</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="nne">NA Northeast</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="nse">NA Southeast</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="nmw">NA Midwest</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="nnw">NA Northwest</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="nsw">NA Southwest</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="ee">EU East</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="ew">EU West</a></td>
+                    </tr>
+                  </tbody>
+                  <tbody>
+                    <tr>
+                      <td><a class="js-btn btn" id="oce">OCE</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="column is-warning">
+                <div class='js-fade fade-in is-paused'>
+                  <table class="table is-fullwidth is-primary is-bordered is-striped has-text-centered">
+                    <thead>
+                      <tr>
+                        <th>Game</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><a id="lol">Legue of Legends</a></td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr>
+                        <td><a id="ffxiv">Final Fantasy X|V</a></td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr>
+                        <td><a id="wow">World of Warcraft</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal">
+              <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Data Center Data</p>
+                  <button class="delete" aria-label="close" id="exit"></button>
+                </header>
+                <section class="modal-card-body">
+                  <!-- Content ... -->
+                </section>
+                <footer class="modal-card-foot">
+                </footer>
+              </div>
+            </div>
 
             </div>
           </div>

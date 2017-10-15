@@ -2,35 +2,74 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 "use strict";
+
+const {shell} = require('electron')
+
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
+var pingAddr;
+var gameID;
 
 
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
+var token = null;
+
+var loginButton = document.querySelector("#login");
+var regButton = document.querySelector("#register");
+var greetingString = document.querySelector("#greeting");
+
+var datacenterDropdown = document.querySelector("#serverDiv");
+var pingButton = document.querySelector("#pingDiv");
+
 document.addEventListener("DOMContentLoaded", function(event) { 
-	
+    var game_drop = document.querySelector("#game_dropdown");
+
+
+
+    ipc.on("gamesReturn", (event, arg) => {
+
+        var gameList = arg.games;
+        for(var i = 0; i < gameList.length; i++)  {
+            var opt = document.createElement("option");
+            var x = gameList[i].gameID;
+            var y = gameList[i].gameName;
+            opt.value = x;
+            opt.innerHTML = y;
+            game_drop.appendChild(opt);
+
+
+        };
+    });
+    ipc.send("gamePop",game_drop);
+
+    ipc.on("loginSwap", (event, arg) => {
+    	if (arg == null) {
+    		loginButton.style.display = '';
+    		regButton.style.display = '';
+    		greetingString.style.display = 'none';
+    	} else {
+    		loginButton.style.display = 'none';
+    		regButton.style.display = 'none';
+    		greetingString.style.display = '';
+    	}
+    });
+
     document.querySelector("#truelogin")
         .addEventListener("click", function () {
         //ipc.send("load-login");
-        console.log("Login clicked");
         var mail = document.querySelector("#emailLogin");
         var pass = document.querySelector("#passwordLogin");
-        console.log(mail.value + pass.value);
         ipc.send("login",mail.value,pass.value);
-
-
-
-        
-
-
     });
 
     document.querySelector("#trueregister")
         .addEventListener("click", function () {
-        //ipc.send("load-login");
-        console.log("Register clicked");
+
+        var mail = document.querySelector("#regEmail");
+        var pass = document.querySelector("#regPassword");
+        ipc.send("register",mail.value,pass.value);
 
     });
 
@@ -58,18 +97,62 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-regionchart");
     });
 
+    document.querySelector("#twitter")
+        .addEventListener("click", function () {
+        shell.openExternal("https://twitter.com/RandalfTheGreat");
+    });
+
+});
+
+function handleGame() {
+	for (var i = datacenter_drop.length - 1; i >= 0; i--) {
+		datacenter_drop.remove(i);
+	}
+    gameID = document.getElementById("game_dropdown").value;
+    if(gameID !=null){
+	    ipc.send("game-selected", gameID);
+    }
+	datacenterDropdown.classList.remove('is-paused');
+}
+
+var datacenter_drop = document.querySelector("#datacenter_dropdown");
+ipc.on("game-selected-reply", function(event, arg) {
+
+
+    var  dataCenterList = arg.dataCenters;
+    for(var i = 0; i <  dataCenterList.length; i++)  {
+        var opt = document.createElement("option");
+        var x =  dataCenterList[i].dataCenterID;
+        var y =  dataCenterList[i].centerName;
+        opt.value = x;
+        opt.innerHTML = y;
+        datacenter_drop.appendChild(opt);
+
+	//update map display
+};});
+
+function handleDataCenter() {
+	console.log("reached Datacenter");
+	var val = document.getElementById("datacenter_dropdown").value;
+	ipc.send("datacenter-selected", val);
+	pingButton.classList.remove('is-paused');
+}
+
+ipc.on("datacenter-selected-reply", (event, data) => {
+	pingAddr = data;
+	console.log(pingAddr);
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
-	ping.addEventListener("click", function(event,arg) {
-		ipc.send("test", "204.2.229.9");
+	ping.addEventListener("click", function(event, pingAddress) {
+		ipc.send("test", pingAddr);
 	});
 });
 
-ipc.on("test-reply", (event, arg) => {
-	console.log(arg);
+ipc.on("test-reply", (event, pingResults) => {
+	console.log(pingResults);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -101,6 +184,15 @@ document.addEventListener('DOMContentLoaded', function () {
 var map;
 function loadMap() {
     map = new Microsoft.Maps.Map(document.querySelector("#myMap"), {
-        credentials: key
+        credentials: key,
+        zoom: 10
     });
+    defaultPushpin();
 }
+
+function defaultPushpin() {
+	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { icon : 'img/defaultPushpin.png',
+	 			anchor: new Microsoft.Maps.Point(12, 39)});
+	map.entities.push(pushpin);
+}
+
