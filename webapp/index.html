@@ -76,7 +76,6 @@
         </nav>
           <div class="hero-body">
             <div class="container has-text-centered">
-
               <div class="tile is-ancestor">
                 <div class="tile is-parent">
                   <article class="tile is-child notification is-primary is-bold">
@@ -86,7 +85,7 @@
                 		<div class="field has-addons has-addons-centered">
                 			<p class="control">
                   				<div class="select is-white">
-                    				<select id="game_dropdown">
+                    				<select id="game_dropdown" onchange = "handleGame();">
                       					<option>Select game</option>
                     				</select>
                   				</div>
@@ -95,7 +94,7 @@
                 		<div class="field has-addons has-addons-centered">
                 			<p class="control">
                   				<div class="select is-white">
-                    				<select>
+                    				<select id = "datacenter_dropdown" onchange = "handleDataCenter();">
                       					<option>Select server/datacenter</option>
                       					<option>ip 1</option>
                       					<option>ip 3</option>
