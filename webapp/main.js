@@ -148,11 +148,8 @@ ipcMain.on('test', (event, arg) => {
 //Post register data
 //implement verification + end case in the future
 ipcMain.on("login",(event,emailGiven, passwordGiven) => {
-console.log(emailGiven+passwordGiven)
-
   request.post(ipAddr+":"+PORT+"/user/login")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept", "json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
             // alert("Oh no! Login error");
@@ -160,7 +157,10 @@ console.log(emailGiven+passwordGiven)
            }
            //res is always in json
            else{
-             console.log(res);
+
+
+             var data = JSON.parse(res.body);
+
            }
 
         });
@@ -168,8 +168,7 @@ console.log(emailGiven+passwordGiven)
 
 ipcMain.on("register",(event, emailGiven, passwordGiven) => {
   request.post(ipAddr+":"+PORT+"/user/register")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept","json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
            // alert("Oh no! Login error");
@@ -177,7 +176,8 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
           }
           //res is always in json
           else{
-            console.log(res);
+            var data = res.body;
+            console.log(body);
           }
 
   });
