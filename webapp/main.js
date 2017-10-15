@@ -151,7 +151,7 @@ function register(emailGiven, passwordGiven) {
         .set("accept", "json")
         .end((err,res) => {
             if(err) {
-                //
+              alert("Oh no! Register error");
             }
             //res is always in json
 
@@ -166,7 +166,7 @@ function login(error, msg,tok){
         .set("accept","json")
         .end((err,res) => {
           if(err) {
-              //
+            alert("Oh no! Login error");
           }
           //res is always in json
   });
@@ -177,7 +177,7 @@ request.post("http://ip-api.com/json")
   .set("accept", "json")
   .end((err,res) => {
     if(err) {
-      //
+      alert("Oh no! ISP Lookup error");
     }
     //res always json
     isp = res.body.isp;
