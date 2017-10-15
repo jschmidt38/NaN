@@ -134,13 +134,14 @@ ipcMain.on('load-regionchart', function () {
 ipcMain.on("game-selected", (event, game) => {
   console.log(game);
   var lat_long = [];
-  request.post(ipAddr+":"+PORT+"/datacenter/forid")
-        .set({gameID: game})
-        .end((res) => {
+  request.post(ipAddr+":"+PORT+"/datacenters/forgame")
+        .set({id: game})
+        .end((err, res) => {
+          console.log(res.text);
           if (!res.success) {
             //todo error
           } else {
-            var data = JSON.parse(res.body);
+            var data = JSON.parse(res.text);
             lat_long.push(data.latitude);
             lat_long.push(data.longitude);
             event.sender.send("game-selected-reply", lat_long);
@@ -148,19 +149,20 @@ ipcMain.on("game-selected", (event, game) => {
         });
   });
 
-ipcMain.on("region-selected", (event, game, region) => {
-  console.log(regionID);
-  request.post(ipAddr+":"+PORT+"datacenter/forid")
-        .set({gameID : game, regionID : region})
-        .end((res) => {
-          if (!(res.success)) {
+ipcMain.on("datacenter-selected", (event, datacenter) => {
+  console.log(datacenter);
+  request.post(ipAddr+":"+PORT+"/datacenters/forid")
+        .set({id: datacenter})
+        .end((err, res) => {
+          var data = JSON.parse(res.text);
+          if (!data.success) {
             //todo error
           } else {
-            var data = JSON.parse(res.body);
-            event.sender.send("region-selected-reply", data.ipAddr);
+            console.log(data);
+            event.sender.send("datacenter-selected-reply", data.ipAddr);
           }
-        })
-})
+        });
+});
 
 ipcMain.on('test', (event, pingAddr) => {
   console.log(pingAddr);

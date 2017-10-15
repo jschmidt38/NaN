@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function handleGame() {
 	console.log("reached Game");
-	gameID = document.getElementById("#game_dropdown").value;
+	gameID = document.getElementById("game_dropdown").value;
 	ipc.send("game-selected", gameID);
 }
 
@@ -73,14 +73,15 @@ ipc.on("game-selected-reply", function(event, dataCenterLocs) {
 	//update map display
 })
 
-function handleRegion() {
-	console.log("reached Region");
-	var val = document.getElementById("#region_dropdown").value;
-	ipc.send("region-selected", gameID, val);
+function handleDataCenter() {
+	console.log("reached Datacenter");
+	var val = document.getElementById("datacenter_dropdown").value;
+	ipc.send("datacenter-selected", val);
 }
 
-ipc.on("region-selected-reply", (ipAddr) => {
-	pingAddr = ipAddr;
+ipc.on("datacenter-selected-reply", (event, data) => {
+	pingAddr = data;
+	console.log(pingAddr);
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -91,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	});
 });
 
-ipc.on("test-reply", (pingResults) => {
+ipc.on("test-reply", (event, pingResults) => {
 	console.log(pingResults);
 });
 
