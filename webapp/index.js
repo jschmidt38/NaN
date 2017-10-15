@@ -10,6 +10,7 @@ var path = require("path");
 const request = require('superagent');
 var pingAddr;
 var dataCenterID;
+var gameID;
 
 
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
@@ -158,12 +159,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 ipc.on("test-reply", (event, pingResults) => {
+	var x;
+	ipc.emit("tokenGrab");
+	ipc.on("tokenRecieve", (event, arg) => {
+    if (arg == null) {
+        return
+    } //arg is your token
+    x = arg;
+	});
+	console.log(x);
 	request.post("104.45.146.84:8080/test/post")
-		   .set({userToken : , dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
+		   .set({userToken : x, dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
 		   .end((err, res) => {
 		   	if (err) {
 		   		//something
 		   	}
+		   	console.log(res);
 		   });
 
 	var ping = document.querySelector("#ping");
@@ -224,14 +235,3 @@ function defaultPushpin() {
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
 	map.entities.push(pushpin);
 }
-
-
-
-ipc.on("tokenRecieve", (event, arg) => {
-    if (arg == null) {
-        return
-    } else {
-        //arg is your token
-        
-    }
-});

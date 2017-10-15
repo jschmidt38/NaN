@@ -159,7 +159,7 @@ ipcMain.on("datacenter-selected", (event, datacenter) => {
       if (!data.success) {
         //todo error
       } else {
-        console.log(data);
+        //console.log(data);
         event.sender.send("datacenter-selected-reply", data.ipAddr);
       }
     });
@@ -173,7 +173,7 @@ ipcMain.on('test', (event, pingAddr) => {
   var timeoutCount, rtt1, rtt2, rtt3, count = 0;
   var rtt1S, rtt2S, rtt3S;
   tracer.on('hop', (hop) => {
-    console.log(`hop: ${JSON.stringify(hop)}`);
+    //console.log(`hop: ${JSON.stringify(hop)}`);
     if (hop.rtt1 === "*") {
       timeoutCount++;
     } else {
@@ -279,6 +279,7 @@ ipcMain.on("tokenManage", (event,arg) => {
 
 
 ipcMain.on("tokenGrab", (event,arg) => {
+  console.log("reach grab");
   event.sender.send("tokenRetrieve",token);
 });
 
