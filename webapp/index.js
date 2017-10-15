@@ -7,8 +7,9 @@ const {shell} = require('electron')
 
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
+const request = require('superagent');
 var pingAddr;
-var gameID;
+var dataCenterID;
 
 
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
@@ -138,14 +139,13 @@ ipc.on("game-selected-reply", function(event, arg) {
 
 function handleDataCenter() {
 	console.log("reached Datacenter");
-	var val = document.getElementById("datacenter_dropdown").value;
-	ipc.send("datacenter-selected", val);
+	dataCenterID = document.getElementById("datacenter_dropdown").value;
+	ipc.send("datacenter-selected", dataCenterID);
 	pingButton.classList.remove('is-paused');
 }
 
 ipc.on("datacenter-selected-reply", (event, data) => {
 	pingAddr = data;
-	console.log(pingAddr);
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -158,7 +158,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 ipc.on("test-reply", (event, pingResults) => {
-	console.log(pingResults);
+	request.post("104.45.146.84:8080/test/post")
+		   .set({userToken : , dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
+		   .end((err, res) => {
+		   	if (err) {
+		   		//something
+		   	}
+		   });
 
 	var ping = document.querySelector("#ping");
 	ping.classList.remove('is-loading');
