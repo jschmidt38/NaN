@@ -7,7 +7,9 @@ const {shell} = require('electron')
 
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
+const request = require('superagent');
 var pingAddr;
+var dataCenterID;
 var gameID;
 
 
@@ -138,14 +140,13 @@ ipc.on("game-selected-reply", function(event, arg) {
 
 function handleDataCenter() {
 	console.log("reached Datacenter");
-	var val = document.getElementById("datacenter_dropdown").value;
-	ipc.send("datacenter-selected", val);
+	dataCenterID = document.getElementById("datacenter_dropdown").value;
+	ipc.send("datacenter-selected", dataCenterID);
 	pingButton.classList.remove('is-paused');
 }
 
 ipc.on("datacenter-selected-reply", (event, data) => {
 	pingAddr = data;
-	console.log(pingAddr);
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -158,7 +159,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 ipc.on("test-reply", (event, pingResults) => {
-	console.log(pingResults);
+	var x;
+	ipc.emit("tokenGrab");
+	ipc.on("tokenRecieve", (event, arg) => {
+    if (arg == null) {
+        return
+    } //arg is your token
+    x = arg;
+	});
+	console.log(x);
+	request.post("104.45.146.84:8080/test/post")
+		   .set({userToken : x, dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
+		   .end((err, res) => {
+		   	if (err) {
+		   		//something
+		   	}
+		   	console.log(res);
+		   });
 
 	var ping = document.querySelector("#ping");
 	ping.classList.remove('is-loading');
@@ -218,4 +235,3 @@ function defaultPushpin() {
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
 	map.entities.push(pushpin);
 }
-
