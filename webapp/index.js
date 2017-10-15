@@ -124,6 +124,8 @@ ipc.on("game-selected-reply", function(event, arg) {
 
 
     var  dataCenterList = arg.dataCenters;
+    removePins();
+    populateMap(dataCenterList);
     for(var i = 0; i <  dataCenterList.length; i++)  {
         var opt = document.createElement("option");
         var x =  dataCenterList[i].dataCenterID;
@@ -231,11 +233,54 @@ function loadMap() {
         credentials: key,
         zoom: 10
     });
-    defaultPushpin();
 }
 
-function defaultPushpin() {
-	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { icon : 'img/defaultPushpin.png',
+var infobox;
+function populateMap(dataCenterList) {
+	var locs = [];
+	var lat;
+	var long;
+	var centerName;
+	var ipAddr;
+	var location;
+	for (var i = 0; i < dataCenterList.length; i++) {
+		lat = dataCenterList[i].latitude;
+		long = dataCenterList[i].longitude;
+		location = new Microsoft.Maps.Location(lat, long);
+		locs.push(location);
+		centerName = dataCenterList[i].centerName;
+		ipAddr = dataCenterList[i].ipAddr;
+		var pushpin = new Microsoft.Maps.Pushpin(location , { icon : 'img/defaultPushpin.png',
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
-	map.entities.push(pushpin);
+		pushpin.metadata = {
+			title: centerName,
+			description: ipAddr
+		};
+		infobox = new Microsoft.Maps.Infobox(location, {visible: false });
+		infobox.setMap(map);
+		Microsoft.Maps.Events.addHandler(pushpin, 'click', pushpinClicked);
+		map.entities.push(pushpin);
+	}
+	var bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
+	map.setView({bounds:bounds, padding: 100});
+}
+
+function pushpinClicked(e) {
+	if (e.target.metadata) {
+		infobox.setOptions({ 
+    		location: e.target.getLocation(),
+    		title: e.target.metadata.title,
+    		description: e.target.metadata.description,
+    		visible: true 
+    	});
+	}
+}
+
+function removePins() {
+	for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+        var pushpin = map.entities.get(i);
+        if (pushpin instanceof Microsoft.Maps.Pushpin) {
+            map.entities.removeAt(i);
+    	}
+    }
 }
