@@ -132,19 +132,19 @@ ipcMain.on('load-regionchart', function () {
 });
 
 ipcMain.on("game-selected", (event, game) => {
-  console.log(game);
+
   var lat_long = [];
   request.post(ipAddr+":"+PORT+"/datacenters/forgame")
         .set({id: game})
         .end((err, res) => {
-          console.log(res.text);
-          if (!res.success) {
+          //console.log(res.text);
+          if (err) {
             //todo error
           } else {
             var data = JSON.parse(res.text);
-            lat_long.push(data.latitude);
-            lat_long.push(data.longitude);
-            event.sender.send("game-selected-reply", lat_long);
+            //lat_long.push(data.latitude);
+            //lat_long.push(data.longitude);
+            event.sender.send("game-selected-reply", data);
           }
         });
   });
