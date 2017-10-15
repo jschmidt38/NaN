@@ -136,7 +136,6 @@ ipcMain.on('test', (event, arg) => {
   ping.promise.probe(arg)
     .then(function (res) {
       ping_traceroute.push(res);
-      console.log("starting tracert");
       const tracer = new traceroute();
       var count = 0;
       tracer.on('destination', (destination) => {
@@ -194,7 +193,7 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
 });
 
 
-request.post("http://ip-api.com/json")
+request.post("http://ip-api.com/json/143.215.194.109")
   .set("accept", "json")
   .end((err,res) => {
     if(err) {
@@ -202,5 +201,5 @@ request.post("http://ip-api.com/json")
     }
     //res always json
     isp = res.body.isp;
-    console.log(isp);
+    //console.log(res.body);
   });
