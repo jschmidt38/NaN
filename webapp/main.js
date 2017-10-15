@@ -17,8 +17,6 @@ const url = require('url')
 var ipAddr = "104.45.146.84";
 var PORT = "8080";
 
-
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -129,6 +127,8 @@ ipcMain.on('load-regionchart', function () {
   })) 
 
 });
+
+
 
 ipcMain.on('test', (event, arg) => {
   console.log(arg);

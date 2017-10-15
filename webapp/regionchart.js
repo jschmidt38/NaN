@@ -2,9 +2,18 @@
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
 
+const electron = require('electron'); 
+var ipcMain = electron;
 
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
+
+var btn = document.querySelector('.js-btn');
+var el = document.querySelector('.js-fade');
+
+// btn.addEventListener('click', function(e){
+//   el.classList.remove('is-paused');
+// });
 
 document.addEventListener("DOMContentLoaded", function(event) { 
 	
@@ -45,6 +54,47 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
     });
+
+    //fade listeners
+    document.querySelector("#nne")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#nse")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#nmw")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#nnw")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#nse")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#ee")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#ew")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#oce")
+        .addEventListener("click", function () {
+        el.classList.remove('is-paused');
+    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -72,3 +122,16 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
+
+// function fade(element) {
+//     var op = 1;  // initial opacity
+//     var timer = setInterval(function () {
+//         if (op <= 0.1){
+//             clearInterval(timer);
+//             element.style.display = 'none';
+//         }
+//         element.style.opacity = op;
+//         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
+//         op -= op * 0.1;
+//     }, 50);
+// }

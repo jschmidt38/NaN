@@ -79,44 +79,51 @@
         </nav>
           <div class="hero-body">
             <div class="container has-text-centered">
-              <h1 class="title has-text-centered is-white">
-                Online Game Server Ping
-              </h1>
-          		<div class="field has-addons has-addons-centered">
-          			<p class="control">
-            				<div class="select is-white">
-              				<select>
-                					<option>Select game</option>
-                					<option>ffxiv</option>      					
-                					<option>wow</option>
-                					<option>cs:go</option>
-              				</select>
-            				</div>
-          			</p>
-          		</div>
+              <div class="tile is-ancestor">
+                <div class="tile is-parent">
+                  <article class="tile is-child notification is-primary is-bold">
+                    <h1 class="title has-text-centered is-white">
+                      Online Game Server Ping
+                    </h1>
+                		<div class="field has-addons has-addons-centered">
+                			<p class="control">
+                  				<div class="select is-white">
+                    				<select>
+                      					<option>Select game</option>
+                      					<option>ffxiv</option>      					
+                      					<option>wow</option>
+                      					<option>cs:go</option>
+                    				</select>
+                  				</div>
+                			</p>
+                		</div>
 
-          		<div class="field has-addons has-addons-centered">
-          			<p class="control">
-            				<div class="select is-white">
-              				<select>
-                					<option>Select server/datacenter</option>
-                					<option>ip 1</option>
-                					<option>ip 3</option>
-                					<option>ip 3</option>
-              				</select>
-            				</div>
-          			</p>
-          		</div>
+                		<div class="field has-addons has-addons-centered">
+                			<p class="control">
+                  				<div class="select is-white">
+                    				<select>
+                      					<option>Select server/datacenter</option>
+                      					<option>ip 1</option>
+                      					<option>ip 3</option>
+                      					<option>ip 3</option>
+                    				</select>
+                  				</div>
+                			</p>
+                		</div>
 
-          		<div class="field has-addons has-addons-centered">
-            			<div class="control">
-              			<button class="button is-link" id="ping">Ping</button>
-            			</div>
-          		</div>
+                		<div class="field has-addons has-addons-centered">
+                  			<div class="control">
+                    			<button class="button is-link" id="ping">Ping</button>
+                  			</div>
+                		</div>
+                  </article>
+                </div>
+              </div>
             </div>
           </div>
 
   		<section class="hero is-fullheight is-info">
+
         <div class="topbuffer">
           <div class="hero-head">
             <nav class="navbar">
@@ -132,14 +139,21 @@
             </nav>
           </div>
         </div>
+
   			<div class="hero-body">
     			<div class="container">
-            <section class="hero is-success is-fullheight is-bold">
-              <div class="hero-body"  id ="myMap">
-              </div>
-            </section>
-    			</div>
-  			</div>
+            <div class="tile is-ancestor">
+              <div class="tile is-parent">
+                <article class="tile is-child notification is-primary is-bold">
+                  <section class="hero is-dark is-fullheight is-bold">
+                    <div class="hero-body"  id ="myMap">
+                    </div>
+                  </section>
+          			</div>
+        			</div>
+            </article>
+          </div>
+        </div>
 
 
   		</section>
