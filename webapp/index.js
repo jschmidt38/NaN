@@ -13,8 +13,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	
     document.querySelector("#login")
         .addEventListener("click", function () {
-        ipc.send("load-login");
+        //ipc.send("load-login");
+
     });
+
+    tippy('#login', {
+        html: document.querySelector('#insideDivLogin'),
+        arrow: true,
+        animation: 'fade',
+        trigger: 'click'
+    })
 
     document.querySelector("#pingchart")
         .addEventListener("click", function () {
