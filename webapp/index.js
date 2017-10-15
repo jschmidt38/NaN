@@ -2,6 +2,9 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 "use strict";
+
+const {shell} = require('electron')
+
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
 var pingAddr;
@@ -91,6 +94,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-regionchart");
     });
 
+    document.querySelector("#twitter")
+        .addEventListener("click", function () {
+        shell.openExternal("https://twitter.com/RandalfTheGreat");
+    });
 
 });
 
@@ -128,6 +135,7 @@ function handleDataCenter() {
 ipc.on("datacenter-selected-reply", (event, data) => {
 	pingAddr = data;
 	console.log(pingAddr);
+//d4eb097ccfd8195129f610e9bfc10ca263951b8e
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {

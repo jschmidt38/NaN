@@ -15,6 +15,10 @@ body::-webkit-scrollbar {
     padding-top: 20px;
 }
 
+.leftbuffer {
+	padding-left: 18px;
+}
+
 .gradient {
   background-image:
     linear-gradient(

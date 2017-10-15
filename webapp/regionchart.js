@@ -1,4 +1,7 @@
 "use strict";
+
+const {shell} = require('electron')
+
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
 
@@ -101,6 +104,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#oce")
         .addEventListener("click", function () {
         el.classList.remove('is-paused');
+    });
+
+    document.querySelector("#twitter")
+        .addEventListener("click", function () {
+        shell.openExternal("https://twitter.com/RandalfTheGreat");
     });
 });
 
