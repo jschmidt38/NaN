@@ -15,6 +15,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .addEventListener("click", function () {
         //ipc.send("load-login");
         console.log("Login clicked");
+        var mail = document.querySelector("#emailLogin");
+        var pass = document.querySelector("#passwordLogin");
+        console.log(mail.value + pass.value);
+        ipc.send("login",mail.value,pass.value);
+
+
+
+        
+
 
     });
 
