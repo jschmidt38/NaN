@@ -15,7 +15,7 @@ const url = require('url')
 
 //to reach databasee
 var ipAddr = "104.45.146.84";
-var PORT = 8080;
+var PORT = "8080";
 
 
 
@@ -157,35 +157,41 @@ ipcMain.on('test', (event, arg) => {
 
 //Post register data
 //implement verification + end case in the future
-function register(emailGiven, passwordGiven) {
+ipcMain.on("login",(event,emailGiven, passwordGiven) => {
+console.log(emailGiven+passwordGiven)
 
-  
-  var request = require("..");
-  request.post(ipAddr+":"+PORT+"/user/register")
+  request.post(ipAddr+":"+PORT+"/user/login")
         .send({email: emailGiven, password: passwordGiven})
-        .set("accept", "json")
-        .end((err,res) => {
-            if(err) {
-              alert("Oh no! Register error");
-            }
-            //res is always in json
-
-
-        });
-}
-
-function login(error, msg,tok){
-  var request;  
-  request.post(ipAddr+":"+PORT+"/user/register")
-        .send({errorbool: error, message:msg, token: token})
-        .set("accept","json")
+        //.set("accept", "json")
         .end((err,res) => {
           if(err) {
-            alert("Oh no! Login error");
+            // alert("Oh no! Login error");
+            console.log(err);
+           }
+           //res is always in json
+           else{
+             console.log(res);
+           }
+
+        });
+});
+
+ipcMain.on("register",(event, emailGiven, passwordGiven) => {
+  request.post(ipAddr+":"+PORT+"/user/register")
+        .send({email: emailGiven, password: passwordGiven})
+        //.set("accept","json")
+        .end((err,res) => {
+          if(err) {
+           // alert("Oh no! Login error");
+           console.log(err);
           }
           //res is always in json
+          else{
+            console.log(res);
+          }
+
   });
-}
+});
 
 
 request.post("http://ip-api.com/json")
