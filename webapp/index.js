@@ -4,6 +4,8 @@
 "use strict";
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
+var pingAddr;
+var gameID;
 
 
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
@@ -89,18 +91,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-regionchart");
     });
 
+
+});
+
+function handleGame() {
+	console.log("reached Game");
+	gameID = document.getElementById("game_dropdown").value;
+	ipc.send("game-selected", gameID);
+}
+
+ipc.on("game-selected-reply", function(event, dataCenterLocs) {
+	//update map display
+})
+
+function handleDataCenter() {
+	console.log("reached Datacenter");
+	var val = document.getElementById("datacenter_dropdown").value;
+	ipc.send("datacenter-selected", val);
+}
+
+ipc.on("datacenter-selected-reply", (event, data) => {
+	pingAddr = data;
+	console.log(pingAddr);
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
-	ping.addEventListener("click", function(event,arg) {
-		ipc.send("test", "104.160.131.1");
+	ping.addEventListener("click", function(event, pingAddress) {
+		ipc.send("test", pingAddr);
 	});
 });
 
-ipc.on("test-reply", (event, arg) => {
-	console.log(arg);
+ipc.on("test-reply", (event, pingResults) => {
+	console.log(pingResults);
 });
 
 document.addEventListener('DOMContentLoaded', function () {

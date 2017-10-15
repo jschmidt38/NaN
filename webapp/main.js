@@ -131,12 +131,43 @@ ipcMain.on('load-regionchart', function () {
 
 });
 
+ipcMain.on("game-selected", (event, game) => {
+  console.log(game);
+  var lat_long = [];
+  request.post(ipAddr+":"+PORT+"/datacenters/forgame")
+        .set({id: game})
+        .end((err, res) => {
+          console.log(res.text);
+          if (!res.success) {
+            //todo error
+          } else {
+            var data = JSON.parse(res.text);
+            lat_long.push(data.latitude);
+            lat_long.push(data.longitude);
+            event.sender.send("game-selected-reply", lat_long);
+          }
+        });
+  });
 
+ipcMain.on("datacenter-selected", (event, datacenter) => {
+  console.log(datacenter);
+  request.post(ipAddr+":"+PORT+"/datacenters/forid")
+        .set({id: datacenter})
+        .end((err, res) => {
+          var data = JSON.parse(res.text);
+          if (!data.success) {
+            //todo error
+          } else {
+            console.log(data);
+            event.sender.send("datacenter-selected-reply", data.ipAddr);
+          }
+        });
+});
 
-ipcMain.on('test', (event, arg) => {
-  console.log(arg);
+ipcMain.on('test', (event, pingAddr) => {
+  console.log(pingAddr);
   var ping_traceroute = [];
-  ping.promise.probe(arg)
+  ping.promise.probe(pingAddr)
     .then(function (res) {
       ping_traceroute.push(res);
       const tracer = new traceroute();
@@ -201,16 +232,6 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
 });
 
 
-request.post("http://ip-api.com/json/143.215.194.109")
-  .set("accept", "json")
-  .end((err,res) => {
-    if(err) {
-      alert("Oh no! ISP Lookup error");
-    }
-    //res always json
-    isp = res.body.isp;
-    //console.log(res.body);
-  });
 
   
 ipcMain.on("gamePop",(event,arg) => {
