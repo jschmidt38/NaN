@@ -212,7 +212,6 @@ ipcMain.on('test', (event, pingAddr) => {
 
 //Post register data
 //implement verification + end case in the future
-<<<<<<< HEAD
 ipcMain.on("login",(event,emailGiven, passwordGiven) => {
   request.post(ipAddr+":"+PORT+"/user/login")
         .set({email: emailGiven, password: passwordGiven})
@@ -250,45 +249,6 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
               event.sender.send("loginSwap",token);
             }
           }
-=======
-ipcMain.on("login", (event, emailGiven, passwordGiven) => {
-  request.post(ipAddr + ":" + PORT + "/user/login")
-    .set({ email: emailGiven, password: passwordGiven })
-    .end((err, res) => {
-      if (err) {
-        // alert("Oh no! Login error");
-        console.log(err);
-      }
-      //res is always in json
-      else {
-        var data = JSON.parse(res.text);
-        console.log(data.success);
-        if (data.success) {
-          token = data.token;
-          console.log("token is " + token);
-        }
-      }
-
-    });
-});
-
-ipcMain.on("register", (event, emailGiven, passwordGiven) => {
-  request.post(ipAddr + ":" + PORT + "/user/register")
-    .set({ email: emailGiven, password: passwordGiven })
-    .end((err, res) => {
-      if (err) {
-        // alert("Oh no! Login error");
-        console.log(err);
-      }
-      //res is always in json
-      else {
-        var data = JSON.parse(res.text);
-        if (data.success) {
-          token = data.token;
-          console.log("token is " + token);
-        }
-      }
->>>>>>> 5bc8f605f8f932619743bb4a40b36b071ee3c5df
 
     });
 });
