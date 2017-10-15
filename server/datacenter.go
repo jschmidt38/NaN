@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -63,6 +64,7 @@ func dataCenterForGameHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	gameID, err := strconv.Atoi(gameIDStr)
 	if err != nil {
+		log.Println(err.Error())
 		goto internal500
 	}
 	db, err = getDB()
@@ -73,6 +75,7 @@ func dataCenterForGameHandler(w http.ResponseWriter, r *http.Request) {
 
 	rows, err = db.Query("SELECT * FROM Datacenters where gameID = ?", gameID)
 	if err != nil {
+		log.Println(err.Error())
 		goto internal500
 	}
 	defer rows.Close()

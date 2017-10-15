@@ -31,7 +31,7 @@ func allRegionHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	rows, err = db.Query("SELECT * FROM Regions")
+	rows, err = db.Query("SELECT id, regionName FROM Regions")
 	if err != nil {
 		goto internal500
 	}

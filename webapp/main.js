@@ -254,22 +254,67 @@ ipcMain.on("register", (event, emailGiven, passwordGiven) => {
     });
 });
 
+ipcMain.on("loadAllGames", (event) => {
+  request.get(ipAddr + ":" + PORT + "/games/all", function (err, res) {
+    if (err) {
+      // alert("Oh no! Login error");
+      console.log(err);
+    } else {
+      var data = JSON.parse(res.text);
+      event.sender.send("gamesReturn", data);
+    }
+  });
+});
 
+ipcMain.on("loadAllRegions", (event, arg) => {
+  request.get(ipAddr + ":" + PORT + "/regions/all", function (err, res) {
+    if (err) {
+      // alert("Oh no! Login error");
+      console.log(err);
+    } else {
+      var data = JSON.parse(res.text);
+      event.sender.send("regionReturn", data);
+    }
+  });
+});
 
+ipcMain.on("loadDataCenterForGame", (event, arg) => {
+  request.post(ipAddr + ":" + PORT + "/datacenters/forgame")
+  .set({ id: arg })
+  .end((err, res) => {
+    if (err) {
+      // alert("Oh no! Login error");
+      console.log(err);
+    } else {
+      var data = JSON.parse(res.text);
+      event.sender.send("dataCenterForGameReturn", data);
+    }
+  });
+});
+
+ipcMain.on("loadHistoricalData", (event, arg) => {
+  request.post(ipAddr + ":" + PORT + "/historical")
+  .set({ dataCenterID: arg[1], regionID: arg[0] })
+  .end((err, res) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(res.text);
+      var data = JSON.parse(res.text);
+      event.sender.send("historicalDataReturn", data);
+    }
+  });
+});
 
 ipcMain.on("gamePop", (event, arg) => {
   request.get(ipAddr + ":" + PORT + "/games/all", function (err, res) {
     if (err) {
       // alert("Oh no! Login error");
       console.log(err);
-    }
-    //res is always in json
-    else {
+    } else {
       var data = JSON.parse(res.text);
       event.sender.send("gamesReturn", data);
-
     }
-
   });
 });
 

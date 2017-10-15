@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -32,6 +33,7 @@ func postResultsHandler(w http.ResponseWriter, r *http.Request) {
 		resp := &resultsResponse{Success: false,
 			Message: "error 400: bad request",
 		}
+
 		b, err := json.Marshal(resp)
 		if err != nil {
 			panic("error marshalling in login")
@@ -65,17 +67,19 @@ func postResultsHandler(w http.ResponseWriter, r *http.Request) {
 		b               []byte
 	)
 
-	db.QueryRow("SELECT id, ipAddr, ispID, FROM Users WHERE token = ?", userToken).Scan(&userID, &ispID, &userIP)
+	db.QueryRow("SELECT id, ipAddr, ispID FROM Users WHERE token = ?", userToken).Scan(&userID, &userIP, &ispID)
 	if userIP == "" || len(userIP) == 0 || userID <= 0 {
+		fmt.Println(userIP, len(userIP), userID)
 		goto badRequest400
 	}
 	db.QueryRow("SELECT id FROM Datacenters WHERE id = ?", dataCenter).Scan(&dataCenterVerif)
 	if dataCenterVerif != dataCenter {
+		fmt.Println(dataCenterVerif, " != ", dataCenter)
 		goto badRequest400
 	}
 
 	_, err = db.Exec(`INSERT INTO Results(userID, dataCenterID, testDate, ipAddr, avgPing, hopCount, ispID, regionID) 
-		VALUES(?, ?, GETDATE(), ?, ?, ?, ?)`, userID, dataCenter, userIP, avgPing, hopCount, ispID, getRegionFromIP(userIP))
+		VALUES(?, ?, GETDATE(), ?, ?, ?, ?, ?)`, userID, dataCenter, userIP, avgPing, hopCount, ispID, getRegionFromIP(userIP))
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

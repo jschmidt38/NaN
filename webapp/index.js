@@ -33,10 +33,7 @@ ipc.emit("tokenManage");
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
-
-
     ipc.on("gamesReturn", (event, arg) => {
-
         var gameList = arg.games;
         for(var i = 0; i < gameList.length; i++)  {
             var opt = document.createElement("option");
@@ -45,8 +42,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             opt.value = x;
             opt.innerHTML = y;
             game_drop.appendChild(opt);
-
-
         };
     });
     ipc.send("gamePop",game_drop);
@@ -60,7 +55,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     		loginButton.style.display = 'none';
     		regButton.style.display = 'none';
     		greetingString.style.display = '';
-    	}
+        }
+        token = arg;
+        console.log(token);
     });
 
     document.querySelector("#truelogin")
@@ -158,26 +155,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	});
 });
 
-ipc.on("test-reply", (event, pingResults) => {
-	var x;
-	ipc.emit("tokenGrab");
-	ipc.on("tokenRecieve", (event, arg) => {
-    if (arg == null) {
-        return
-    } //arg is your token
-    x = arg;
-	});
-	console.log(x);
-	request.post("104.45.146.84:8080/test/post")
-		   .set({userToken : x, dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
-		   .end((err, res) => {
-		   	if (err) {
-		   		//something
-		   	}
-		   	console.log(res);
-		   });
+var token;
+ipc.on("tokenRetrieve", (event, arg) => {
+    token = arg;
+    console.log("Got token: " + arg);
+});
 
-	var ping = document.querySelector("#ping");
+ipc.on("test-reply", (event, pingResults) => {
+    var ping = document.querySelector("#ping");
+    var pingCount = document.querySelector("#pingcount");
+    var hopCount = document.querySelector("#hopcount");
+
+    pingCount.innerHTML = pingResults[0];
+    hopCount.innerHTML = pingResults[1];
+
 	ping.classList.remove('is-loading');
 
 	modal = document.querySelector('.modal');  
@@ -191,7 +182,20 @@ ipc.on("test-reply", (event, pingResults) => {
 		modal.classList.remove('is-active');
 		html.classList.remove('is-clipped');
 		mapBox.classList.remove('is-paused');
-	});
+    });
+    
+    if (token == null) {
+        return;
+    }
+
+    request.post("104.45.146.84:8080/test/post")
+    .set({userToken : token, dataCenter : dataCenterID, avgPing : pingResults[0], hopCount : pingResults[1]})
+    .end((err, res) => {
+        if (err) {
+            console.log(err);
+        }
+        console.log(res);
+    });
 	
 });
 
