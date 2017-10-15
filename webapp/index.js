@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
 	ping.addEventListener("click", function(event,arg) {
-		ipc.send("test", "204.2.229.9");
+		ipc.send("test", "104.160.131.1");
 	});
 });
 
@@ -101,6 +101,14 @@ document.addEventListener('DOMContentLoaded', function () {
 var map;
 function loadMap() {
     map = new Microsoft.Maps.Map(document.querySelector("#myMap"), {
-        credentials: key
+        credentials: key,
+        zoom: 10
     });
+    defaultPushpin();
+}
+
+function defaultPushpin() {
+	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { icon : 'img/defaultPushpin.png',
+	 			anchor: new Microsoft.Maps.Point(12, 39)});
+	map.entities.push(pushpin);
 }
