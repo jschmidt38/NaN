@@ -23,6 +23,9 @@ var greetingString = document.querySelector("#greeting");
 var datacenterDropdown = document.querySelector("#serverDiv");
 var pingButton = document.querySelector("#pingDiv");
 
+var modal = null;  
+var html = null;
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -157,6 +160,17 @@ ipc.on("test-reply", (event, pingResults) => {
 
 	var ping = document.querySelector("#ping");
 	ping.classList.remove('is-loading');
+
+	modal = document.querySelector('.modal');  
+	html = document.querySelector('html');
+	modal.classList.add('is-active');
+	html.classList.add('is-clipped');
+
+	modal.querySelector('#exit').addEventListener('click', function(e) {
+		e.preventDefault();
+		modal.classList.remove('is-active');
+		html.classList.remove('is-clipped');
+	});
 	
 });
 
