@@ -1,10 +1,11 @@
 const electron = require('electron');
 var { app, BrowserWindow, ipcMain } = electron;
-var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
+
 var isp;
-var token = "ssss";
+var token = null;
+
 var status = false; //log in status
 var userName = null;
 
