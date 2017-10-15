@@ -15,6 +15,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
         .addEventListener("click", function () {
         //ipc.send("load-login");
         console.log("Login clicked");
+        var mail = document.querySelector("#emailLogin");
+        var pass = document.querySelector("#passwordLogin");
+        console.log(mail.value + pass.value);
+        ipc.send("login",mail.value,pass.value);
+
+
+
+        
+
+
+    });
+
+    document.querySelector("#trueregister")
+        .addEventListener("click", function () {
+        //ipc.send("load-login");
+        console.log("Register clicked");
 
     });
 
@@ -25,9 +41,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
         trigger: 'click'
     })
 
+    tippy('#register', {
+        html: document.querySelector('#insideDivRegister'),
+        arrow: true,
+        animation: 'fade',
+        trigger: 'click'
+    })
+
     document.querySelector("#pingchart")
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
+    });
+
+    document.querySelector("#regionchart")
+        .addEventListener("click", function () {
+        ipc.send("load-regionchart");
     });
 
 });

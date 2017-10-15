@@ -2,7 +2,7 @@
 <html>
 	<head>
   		<meta charset="UTF-8">
-      <title>Nat App</title>
+      <title>Nan Analyzer Tool</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css">
       <link rel="stylesheet" href="style.css">
@@ -16,7 +16,7 @@
         <nav class="navbar is-transparent">
           <div class="navbar-brand">
             <a class="navbar-item">
-              <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+              <img src="img/nanalysis.png" alt="Analyze your network today!" width="112" height="28">
             </a>
 
             <div class="navbar-burger burger" data-target="navMenuTransparentExample">
@@ -67,51 +67,16 @@
                       <span>Login</span>
                     </a>
                   </p>
+                  <p class="control">
+                    <a class="button is-danger" data-interactive="true" id="register">
+                      <span>Register</span>
+                    </a>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </nav>
-          <!--<div class="hero-head">
-            <nav class="navbar">
-              <div class="container">
-                <div class="navbar-brand">
-                  <a class="navbar-item">
-                    
-                  </a>
-                  <span class="navbar-burger burger" data-target="navbarMenuHeroA">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  </span>
-                </div>
-                <div id="navbarMenuHeroA" class="navbar-menu">
-                  <div class="navbar-end ">
-                    <a class="navbar-item is-active is-white" id="home">
-                      Home
-                    </a>
-                    <a class="navbar-item" id="pingchart">
-                      Ping Chart
-                    </a>
-                    <a class="navbar-item">
-                      ISP
-                    </a>
-                    <a class="navbar-item">
-                      Profile
-                    </a>
-                    <span class="navbar-item">
-                      <a class="button is-info is-inverted" id="login">
-                        <span>Login</span>
-                      </a>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </div>-->
-
-
-
           <div class="hero-body">
             <div class="container has-text-centered">
               <h1 class="title has-text-centered is-white">
@@ -185,6 +150,38 @@
         <div id="insideDivLogin">
           <div class="field">
             <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="Email" id="emailLogin">
+              <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" id="passwordLogin">
+              <span class="icon is-small is-left">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-success" id="truelogin">
+                Login
+              </button>
+            </p>
+          </div>
+        </div>
+        
+      </div>
+
+      <div id="divLogin" style="display:none;">
+        <div id="insideDivRegister">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
               <input class="input" type="email" placeholder="Email">
               <span class="icon is-small is-left">
                 <i class="fa fa-envelope"></i>
@@ -204,8 +201,8 @@
           </div>
           <div class="field">
             <p class="control">
-              <button class="button is-success" id="truelogin">
-                Login
+              <button class="button is-danger" id="trueregister">
+                Register
               </button>
             </p>
           </div>

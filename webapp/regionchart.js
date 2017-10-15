@@ -41,9 +41,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
         ipc.send("load-home");
     });
 
-    document.querySelector("#regionchart")
+    document.querySelector("#pingchart")
         .addEventListener("click", function () {
-        ipc.send("load-regionchart");
+        ipc.send("load-pingchart");
     });
 });
 
