@@ -105,15 +105,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function handleGame() {
-	console.log("reached Game");
-	gameID = document.getElementById("game_dropdown").value;
-	ipc.send("game-selected", gameID);
+	for (var i = datacenter_drop.length - 1; i >= 0; i--) {
+		datacenter_drop.remove(i);
+	}
     gameID = document.getElementById("game_dropdown").value;
     if(gameID !=null){
 	    ipc.send("game-selected", gameID);
     }
 	datacenterDropdown.classList.remove('is-paused');
-//3e496695fb9a274dff2cadf114d472ba23921178
 }
 
 var datacenter_drop = document.querySelector("#datacenter_dropdown");
@@ -121,7 +120,6 @@ ipc.on("game-selected-reply", function(event, arg) {
 
 
     var  dataCenterList = arg.dataCenters;
-    console.log(dataCenterList);
     for(var i = 0; i <  dataCenterList.length; i++)  {
         var opt = document.createElement("option");
         var x =  dataCenterList[i].dataCenterID;
@@ -143,7 +141,6 @@ function handleDataCenter() {
 ipc.on("datacenter-selected-reply", (event, data) => {
 	pingAddr = data;
 	console.log(pingAddr);
-//d4eb097ccfd8195129f610e9bfc10ca263951b8e
 });
 
 document.addEventListener("DOMContentLoaded", function(event) {
