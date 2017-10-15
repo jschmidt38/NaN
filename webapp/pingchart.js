@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     		greetingString.style.display = '';
     	}
     });
+    ipc.emit("tokenManage");
 	
     document.querySelector("#truelogin")
         .addEventListener("click", function () {

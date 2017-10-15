@@ -14,7 +14,6 @@ var gameID;
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
-var token = null;
 
 var loginButton = document.querySelector("#login");
 var regButton = document.querySelector("#register");
@@ -55,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     		greetingString.style.display = '';
     	}
     });
+    ipc.emit("tokenManage");
 
     document.querySelector("#truelogin")
         .addEventListener("click", function () {

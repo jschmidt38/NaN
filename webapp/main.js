@@ -204,7 +204,7 @@ ipcMain.on("login",(event,emailGiven, passwordGiven) => {
              console.log(data.success);
              if(data.success){
               token = data.token;
-              console.log("token is "+token);
+              event.sender.send("loginSwap",token);
             }
            }
 
@@ -224,7 +224,7 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
             var data = JSON.parse(res.text);
             if(data.success){
               token = data.token;
-              console.log("token is "+token);
+              event.sender.send("loginSwap",token);
             }
           }
 
@@ -248,4 +248,8 @@ ipcMain.on("gamePop",(event,arg) => {
           }
 
   });
+});
+ipcMain.on("tokenManage",(event,arg) => {
+  event.sender.send("loginSwap",token)
+
 });
