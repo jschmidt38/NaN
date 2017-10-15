@@ -24,7 +24,7 @@ var html = null;
 // btn.addEventListener('click', function(e){
 //   el.classList.remove('is-paused');
 // });
-
+ipc.emit("tokenManage");
 document.addEventListener("DOMContentLoaded", function(event) { 
 
   ipc.on("loginSwap", (event, arg) => {
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-
+  ipc.emit("tokenManage");
   // Get all "navbar-burger" elements
   var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
