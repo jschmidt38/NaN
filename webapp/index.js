@@ -121,8 +121,9 @@ function handleGame() {
 var datacenter_drop = document.querySelector("#datacenter_dropdown");
 ipc.on("game-selected-reply", function(event, arg) {
 
-
     var  dataCenterList = arg.dataCenters;
+    removePins();
+    populateMap(dataCenterList);
     for(var i = 0; i <  dataCenterList.length; i++)  {
         var opt = document.createElement("option");
         var x =  dataCenterList[i].dataCenterID;
@@ -206,12 +207,23 @@ function loadMap() {
         credentials: key,
         zoom: 10
     });
-    defaultPushpin();
 }
 
-function defaultPushpin() {
-	var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: 41.8781, longitude: -87.6298} , { icon : 'img/defaultPushpin.png',
+function populateMap(dataCenterList) {
+	for (var i = 0; i < dataCenterList.length; i++) {
+		var lat = dataCenterList[i].latitude;
+		var long = dataCenterList[i].longitude;
+		var pushpin = new Microsoft.Maps.Pushpin( {altitude: 0, altitudeReference: -1, latitude: lat, longitude: long} , { icon : 'img/defaultPushpin.png',
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
-	map.entities.push(pushpin);
+		map.entities.push(pushpin);	
+	}
 }
 
+function removePins() {
+    for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+        var pushpin = map.entities.get(i);
+        if (pushpin instanceof Microsoft.Maps.Pushpin) {
+            map.entities.removeAt(i);
+        }
+    }
+}
