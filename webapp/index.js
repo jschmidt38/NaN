@@ -154,6 +154,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 ipc.on("test-reply", (event, pingResults) => {
 	console.log(pingResults);
+
+	var ping = document.querySelector("#ping");
+	ping.classList.remove('is-loading');
+	
 });
 
 document.addEventListener('DOMContentLoaded', function () {
