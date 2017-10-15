@@ -211,3 +211,20 @@ request.post("http://ip-api.com/json/143.215.194.109")
     isp = res.body.isp;
     //console.log(res.body);
   });
+
+  
+ipcMain.on("gamePop",(event,arg) => {
+  request.get(ipAddr+":"+PORT+"/games/all", function(err,res){
+          if(err) {
+           // alert("Oh no! Login error");
+           console.log(err);
+          }
+          //res is always in json
+          else{
+            var data = JSON.parse(res.text);
+            event.sender.send("gamesReturn", data);
+            
+          }
+
+  });
+});
