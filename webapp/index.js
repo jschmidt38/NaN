@@ -219,3 +219,13 @@ function defaultPushpin() {
 	map.entities.push(pushpin);
 }
 
+
+
+ipc.on("tokenRecieve", (event, arg) => {
+    if (arg == null) {
+        return
+    } else {
+        //arg is your token
+        
+    }
+});

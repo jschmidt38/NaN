@@ -276,3 +276,9 @@ ipcMain.on("gamePop", (event, arg) => {
 ipcMain.on("tokenManage", (event,arg) => {
   event.sender.send("loginSwap",token);
 });
+
+
+ipcMain.on("tokenGrab", (event,arg) => {
+  event.sender.send("tokenRetrieve",token);
+});
+
