@@ -147,6 +147,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
 	ping.addEventListener("click", function(event, pingAddress) {
+		ping.classList.add('is-loading');
 		ipc.send("test", pingAddr);
 	});
 });
