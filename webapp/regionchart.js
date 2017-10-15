@@ -1,6 +1,3 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
 "use strict";
 var ipc = require("electron").ipcRenderer;
 var path = require("path");
@@ -39,28 +36,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
         trigger: 'click'
     })
 
+    document.querySelector("#home")
+        .addEventListener("click", function () {
+        ipc.send("load-home");
+    });
+
     document.querySelector("#pingchart")
         .addEventListener("click", function () {
         ipc.send("load-pingchart");
     });
-
-    document.querySelector("#regionchart")
-        .addEventListener("click", function () {
-        ipc.send("load-regionchart");
-    });
-
-});
-
-document.addEventListener("DOMContentLoaded", function(event) {
-	var ping = document.querySelector("#ping");
-
-	ping.addEventListener("click", function(event,arg) {
-		ipc.send("test", "204.2.229.9");
-	});
-});
-
-ipc.on("test-reply", (event, arg) => {
-	console.log(arg);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -88,10 +72,3 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
-
-var map;
-function loadMap() {
-    map = new Microsoft.Maps.Map(document.querySelector("#myMap"), {
-        credentials: key
-    });
-}
