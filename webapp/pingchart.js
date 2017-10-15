@@ -6,6 +6,10 @@ var path = require("path");
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
+var loginButton = document.querySelector("#login");
+var regButton = document.querySelector("#register");
+var greetingString = document.querySelector("#greeting");
+
 document.addEventListener("DOMContentLoaded", function(event) { 
 	
     document.querySelector("#truelogin")

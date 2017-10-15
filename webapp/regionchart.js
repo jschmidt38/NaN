@@ -11,6 +11,13 @@ var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 var btn = document.querySelector('.js-btn');
 var el = document.querySelector('.js-fade');
 
+var loginButton = document.querySelector("#login");
+var regButton = document.querySelector("#register");
+var greetingString = document.querySelector("#greeting");
+
+var modal = null;  
+var html = null;
+
 // btn.addEventListener('click', function(e){
 //   el.classList.remove('is-paused');
 // });
@@ -122,9 +129,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 });
-
-var modal = document.querySelector('.modal');  
-var html = document.querySelector('html');
 
 document.querySelector('#lol').addEventListener('click', function(event) {
   event.preventDefault();

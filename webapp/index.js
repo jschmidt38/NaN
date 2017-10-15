@@ -9,6 +9,12 @@ var path = require("path");
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
+var token = null;
+
+var loginButton = document.querySelector("#login");
+var regButton = document.querySelector("#register");
+var greetingString = document.querySelector("#greeting");
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -30,10 +36,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
     ipc.send("gamePop",game_drop);
 
-    
-
-
-
+    ipc.on("loginSwap", (event, arg) => {
+    	if (arg == null) {
+    		loginButton.styleList.remove("display: none");
+    		regButton.styleList.remove("display: none");
+    		greetingString.styleList.add("display: none");
+    	} else {
+    		loginButton.styleList.add("display: none");
+    		regButton.styleList.add("display: none");
+    		greetingString.styleList.remove("display: none");
+    	}
+    });
 
     document.querySelector("#truelogin")
         .addEventListener("click", function () {
@@ -130,3 +143,4 @@ function defaultPushpin() {
 	 			anchor: new Microsoft.Maps.Point(12, 39)});
 	map.entities.push(pushpin);
 }
+
