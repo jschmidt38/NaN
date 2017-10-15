@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function handleGame() {
-	for (var i = datacenter_drop.length - 1; i >= 0; i--) {
+	for (var i = datacenter_drop.length - 1; i > 0; i--) {
 		datacenter_drop.remove(i);
 	}
     gameID = document.getElementById("game_dropdown").value;
