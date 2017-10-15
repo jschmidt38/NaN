@@ -4,6 +4,9 @@ var ping = require('ping');
 var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
 var isp;
+var token = null;
+var status = false; //log in status
+var userName = null;
 
 // Module to control application life.
 //const app = electron.app
@@ -136,7 +139,6 @@ ipcMain.on('test', (event, arg) => {
   ping.promise.probe(arg)
     .then(function (res) {
       ping_traceroute.push(res);
-      console.log("starting tracert");
       const tracer = new traceroute();
       var count = 0;
       tracer.on('destination', (destination) => {
@@ -158,11 +160,8 @@ ipcMain.on('test', (event, arg) => {
 //Post register data
 //implement verification + end case in the future
 ipcMain.on("login",(event,emailGiven, passwordGiven) => {
-console.log(emailGiven+passwordGiven)
-
   request.post(ipAddr+":"+PORT+"/user/login")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept", "json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
             // alert("Oh no! Login error");
@@ -170,7 +169,12 @@ console.log(emailGiven+passwordGiven)
            }
            //res is always in json
            else{
-             console.log(res);
+             var data = JSON.parse(res.text);
+             console.log(data.success);
+             if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
            }
 
         });
@@ -178,8 +182,7 @@ console.log(emailGiven+passwordGiven)
 
 ipcMain.on("register",(event, emailGiven, passwordGiven) => {
   request.post(ipAddr+":"+PORT+"/user/register")
-        .send({email: emailGiven, password: passwordGiven})
-        //.set("accept","json")
+        .set({email: emailGiven, password: passwordGiven})
         .end((err,res) => {
           if(err) {
            // alert("Oh no! Login error");
@@ -187,14 +190,18 @@ ipcMain.on("register",(event, emailGiven, passwordGiven) => {
           }
           //res is always in json
           else{
-            console.log(res);
+            var data = JSON.parse(res.text);
+            if(data.success){
+              token = data.token;
+              console.log("token is "+token);
+            }
           }
 
   });
 });
 
 
-request.post("http://ip-api.com/json")
+request.post("http://ip-api.com/json/143.215.194.109")
   .set("accept", "json")
   .end((err,res) => {
     if(err) {
@@ -202,5 +209,5 @@ request.post("http://ip-api.com/json")
     }
     //res always json
     isp = res.body.isp;
-    console.log(isp);
+    //console.log(res.body);
   });
