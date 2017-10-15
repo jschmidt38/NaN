@@ -74,8 +74,8 @@ func postResultsHandler(w http.ResponseWriter, r *http.Request) {
 		goto badRequest400
 	}
 
-	_, err = db.Exec(`INSERT INTO Results(userID, dataCenterID, testDate, ipAddr, avgPing, hopCount, ispID) 
-		VALUES(?, ?, GETDATE(), ?, ?, ?, ?)`, userID, dataCenter, userIP, avgPing, hopCount, ispID)
+	_, err = db.Exec(`INSERT INTO Results(userID, dataCenterID, testDate, ipAddr, avgPing, hopCount, ispID, regionID) 
+		VALUES(?, ?, GETDATE(), ?, ?, ?, ?)`, userID, dataCenter, userIP, avgPing, hopCount, ispID, getRegionFromIP(userIP))
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
