@@ -120,6 +120,16 @@ ipcMain.on('load-home', function () {
 
 });
 
+ipcMain.on('load-regionchart', function () {
+  
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'regionchart.html'),
+    protocol: 'file:',
+    slashes: true
+  })) 
+
+});
+
 ipcMain.on('test', (event, arg) => {
   console.log(arg);
   var ping_traceroute = [];

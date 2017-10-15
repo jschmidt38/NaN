@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -33,14 +34,24 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 		return
 	}
+	email = strings.ToLower(email)
 
 	db, err := getDB()
 	if err != nil {
 		log.Panic("error:", err.Error())
 	}
 	defer db.Close()
+	var (
+		ispID   int
+		ispName = getISPFromIP(r.RemoteAddr)
+	)
+	db.QueryRow("SELECT id FROM ISPs WHERE ispName = ?", ispName).Scan(&ispID)
+	if ispID <= 0 {
+		db.Exec("INSERT INTO ISPs(ispName) VALUES(?)", ispName)
+		db.QueryRow("SELECT id FROM ISPs WHERE ispName = ?", ispName).Scan(&ispID)
+	}
 
-	stmt, err := db.Prepare("INSERT INTO Users(email, pass, ipAddr, token) VALUES(?, ?, ?, ?)")
+	stmt, err := db.Prepare("INSERT INTO Users(email, pass, ipAddr, ispID, token) VALUES(?, ?, ?, ?, ?)")
 	if err != nil {
 		log.Panic("error:", err.Error())
 		w.WriteHeader(http.StatusInternalServerError)
@@ -58,7 +69,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 	token := generateUUID()
 	ip := extractIPAddr(r.RemoteAddr)
-	_, err = stmt.Exec(email, string(hash), ip, token)
+	_, err = stmt.Exec(email, string(hash), ip, ispID, token)
 	if err != nil {
 		fmt.Println(err)
 		resp = &userResponse{Success: false,
@@ -103,6 +114,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(b)
 		return
 	}
+	email = strings.ToLower(email)
 
 	db, err := getDB()
 	if err != nil {
@@ -112,9 +124,11 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	var (
-		hash  string
-		b     []byte
-		token string
+		hash    string
+		b       []byte
+		token   string
+		ispID   int
+		ispName = getISPFromIP(r.RemoteAddr)
 	)
 	err = db.QueryRow("SELECT pass FROM Users WHERE email = ?", email).Scan(&hash)
 	if err != nil || hash == "" {
@@ -126,8 +140,15 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		goto badUserPass
 	}
 
+	db.QueryRow("SELECT id FROM ISPs WHERE ispName = ?", ispName).Scan(&ispID)
+	if ispID <= 0 {
+		db.Exec("INSERT INTO ISPs(ispName) VALUES(?)", ispName)
+		db.QueryRow("SELECT id FROM ISPs WHERE ispName = ?", ispName).Scan(&ispID)
+	}
+
 	token = generateUUID()
-	_, err = db.Exec("UPDATE Users SET token = ?, ipAddr = ? WHERE email = ?", token, extractIPAddr(r.RemoteAddr), email)
+	_, err = db.Exec("UPDATE Users SET token = ?, ipAddr = ?, ispID = ? WHERE email = ?", token,
+		extractIPAddr(r.RemoteAddr), ispID, email)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
