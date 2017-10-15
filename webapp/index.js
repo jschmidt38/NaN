@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 function handleGame() {
-	for (var i = datacenter_drop.length - 1; i >= 0; i--) {
+	for (var i = datacenter_drop.length - 1; i > 0; i--) {
 		datacenter_drop.remove(i);
 	}
     gameID = document.getElementById("game_dropdown").value;
@@ -147,12 +147,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
 	ping.addEventListener("click", function(event, pingAddress) {
+		ping.classList.add('is-loading');
 		ipc.send("test", pingAddr);
 	});
 });
 
 ipc.on("test-reply", (event, pingResults) => {
 	console.log(pingResults);
+
+	var ping = document.querySelector("#ping");
+	ping.classList.remove('is-loading');
+	
 });
 
 document.addEventListener('DOMContentLoaded', function () {
