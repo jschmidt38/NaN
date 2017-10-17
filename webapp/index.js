@@ -27,6 +27,8 @@ var pingButton = document.querySelector("#pingDiv");
 
 var mapBox = document.querySelector("#mapDiv");
 
+var pingError = document.querySelector('#errorMessage');
+
 var modal = null;  
 var html = null;
 ipc.emit("tokenManage");
@@ -104,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.querySelector("#twitter")
         .addEventListener("click", function () {
         shell.openExternal("https://twitter.com/RandalfTheGreat");
-    });
+    });        
 
 });
 
@@ -151,10 +153,15 @@ ipc.on("datacenter-selected-reply", (event, data) => {
 document.addEventListener("DOMContentLoaded", function(event) {
 	var ping = document.querySelector("#ping");
 
+    
 	ping.addEventListener("click", function(event, pingAddress) {
-		ping.classList.add('is-loading');
-		ipc.send("test", pingAddr);
+        dataCenterID = document.getElementById("datacenter_dropdown").value;
+        if (dataCenterID != "null") {
+            ping.classList.add('is-loading');
+		    ipc.send("test", pingAddr);
+        }
 	});
+   
 });
 
 var token;
