@@ -120,17 +120,20 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.querySelector("#truelogin")
         .addEventListener("click", function () {
-            //ipc.send("load-login");
-            console.log("Login clicked");
-
-        });
+        //ipc.send("load-login");
+        var mail = document.querySelector("#emailLogin");
+        var pass = document.querySelector("#passwordLogin");
+        ipc.send("login",mail.value,pass.value);
+    });
 
     document.querySelector("#trueregister")
         .addEventListener("click", function () {
-            //ipc.send("load-login");
-            console.log("Register clicked");
 
-        });
+        var mail = document.querySelector("#regEmail");
+        var pass = document.querySelector("#regPassword");
+        ipc.send("register",mail.value,pass.value);
+
+    });
 
     tippy('#login', {
         html: document.querySelector('#insideDivLogin'),

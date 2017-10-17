@@ -166,68 +166,66 @@
   </section>
 
   <div id="divLogin" style="display:none;">
-    <div id="insideDivLogin">
-      <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email">
-          <span class="icon is-small is-left">
-            <i class="fa fa-envelope"></i>
-          </span>
-          <span class="icon is-small is-right">
-            <i class="fa fa-check"></i>
-          </span>
-        </p>
+        <div id="insideDivLogin">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="Email" id="emailLogin">
+              <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" id="passwordLogin">
+              <span class="icon is-small is-left">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-success" id="truelogin">
+                Login
+              </button>
+            </p>
+          </div>
+        </div>
+        
       </div>
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password">
-          <span class="icon is-small is-left">
-            <i class="fa fa-lock"></i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control">
-          <button class="button is-success" id="truelogin">
-            Login
-          </button>
-        </p>
-      </div>
-    </div>
 
-  </div>
-
-  <div id="divLogin" style="display:none;">
-    <div id="insideDivRegister">
-      <div class="field">
-        <p class="control has-icons-left has-icons-right">
-          <input class="input" type="email" placeholder="Email">
-          <span class="icon is-small is-left">
-            <i class="fa fa-envelope"></i>
-          </span>
-          <span class="icon is-small is-right">
-            <i class="fa fa-check"></i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password">
-          <span class="icon is-small is-left">
-            <i class="fa fa-lock"></i>
-          </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control">
-          <button class="button is-danger" id="trueregister">
-            Register
-          </button>
-        </p>
-      </div>
-    </div>
-
-  </div>
+      <div id="divLogin" style="display:none;">
+        <div id="insideDivRegister">
+          <div class="field">
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" placeholder="Email" id="regEmail">
+              <span class="icon is-small is-left">
+                <i class="fa fa-envelope"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control has-icons-left">
+              <input class="input" type="password" placeholder="Password" id="regPassword">
+              <span class="icon is-small is-left">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <button class="button is-danger" id="trueregister">
+                Register
+              </button>
+            </p>
+          </div>
+        </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
   <script type="text/javascript" src="js/tippy.min.js"></script>
@@ -267,7 +265,10 @@
         }
     });
 
-      </script>
+  </script>
+  </div>
+  </div>
+  </section>
 </body>
 
 </html>
