@@ -102,7 +102,7 @@ app.on('activate', function () {
 //   });
 // });
 
-ipcMain.on('load-pingchart', function () {
+ipcMain.on('load-pingchart', (event, arg) => {
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'pingchart.html'),
@@ -112,7 +112,7 @@ ipcMain.on('load-pingchart', function () {
 
 });
 
-ipcMain.on('load-home', function () {
+ipcMain.on('load-home', (event, arg) => {
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
@@ -120,15 +120,21 @@ ipcMain.on('load-home', function () {
     slashes: true
   }))
 
+  token = arg;
+  event.sender.send("set-token");
+
 });
 
-ipcMain.on('load-regionchart', function () {
+ipcMain.on('load-regionchart', (event, arg) => {
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'regionchart.html'),
     protocol: 'file:',
     slashes: true
   }))
+
+  token = arg;
+  event.sender.send("set-token");
 
 });
 

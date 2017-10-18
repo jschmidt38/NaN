@@ -196,3 +196,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
     }
 });
 
+ipc.on("set-token", (event, arg) =>{
+    token = arg;
+    console.log(token);
+});
+

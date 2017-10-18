@@ -32,6 +32,7 @@ var pingError = document.querySelector('#errorMessage');
 var modal = null;  
 var html = null;
 ipc.emit("tokenManage");
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     var game_drop = document.querySelector("#game_dropdown");
 
@@ -206,6 +207,11 @@ ipc.on("test-reply", (event, pingResults) => {
         console.log(res);
     });
 	
+});
+
+ipc.on("set-token", (event, arg) =>{
+    token = arg;
+    console.log(token);
 });
 
 document.addEventListener('DOMContentLoaded', function () {
