@@ -16,7 +16,9 @@ var gameID;
 var key = "Ah-fxnT1s5WVvzbmH-OZNl7AeUF4pLpNMfgz4WYn5WOnH9cyQDJCKksgWvYNhmo-";
 var url = "http://dev.virtualearth.net/REST/v1/Imagery/Map";
 
-var token = null;
+const remote = require('electron').remote;
+var token = remote.getGlobal('token');
+console.log(token);
 
 var loginButton = document.querySelector("#login");
 var regButton = document.querySelector("#register");
@@ -33,7 +35,20 @@ var modal = null;
 var html = null;
 ipc.emit("tokenManage");
 
+function swapLoginOnLoad(token) {
+    if (token == null) {
+        loginButton.style.display = '';
+        regButton.style.display = '';
+        greetingString.style.display = 'none';
+    } else {
+        loginButton.style.display = 'none';
+        regButton.style.display = 'none';
+        greetingString.style.display = '';
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function(event) { 
+
     var game_drop = document.querySelector("#game_dropdown");
 
     ipc.on("gamesReturn", (event, arg) => {
@@ -101,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     document.querySelector("#regionchart")
         .addEventListener("click", function () {
-        ipc.send("load-regionchart");
+        ipc.send("load-regionchart", token);
     });
 
     document.querySelector("#twitter")

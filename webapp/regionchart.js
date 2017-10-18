@@ -21,7 +21,23 @@ var greetingString = document.querySelector("#greeting");
 var modal = null;
 var html = null;
 
+const remote = require('electron').remote;
+var token = remote.getGlobal('token');
+console.log(token);
+
 var currentRegion = 1;
+
+function swapLoginOnLoad(token) {
+    if (token == null) {
+        loginButton.style.display = '';
+        regButton.style.display = '';
+        greetingString.style.display = 'none';
+    } else {
+        loginButton.style.display = 'none';
+        regButton.style.display = 'none';
+        greetingString.style.display = '';
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function (event) {
 
@@ -151,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     document.querySelector("#home")
         .addEventListener("click", function () {
-            ipc.send("load-home");
+            ipc.send("load-home", token);
         });
 
     // document.querySelector("#pingchart")
@@ -198,6 +214,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 ipc.on("set-token", (event, arg) =>{
     token = arg;
+
     console.log(token);
 });
 

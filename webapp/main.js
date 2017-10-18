@@ -4,7 +4,7 @@ var traceroute = require('nodejs-traceroute');
 const request = require('superagent');
 
 var isp;
-var token = null;
+global.token = null;
 
 var status = false; //log in status
 var userName = null;
@@ -120,7 +120,7 @@ ipcMain.on('load-home', (event, arg) => {
     slashes: true
   }))
 
-  token = arg;
+  global.token = arg;
   event.sender.send("set-token");
 
 });
@@ -133,7 +133,7 @@ ipcMain.on('load-regionchart', (event, arg) => {
     slashes: true
   }))
 
-  token = arg;
+  global.token = arg;
   event.sender.send("set-token");
 
 });
@@ -232,8 +232,8 @@ ipcMain.on("login", (event, emailGiven, passwordGiven) => {
         var data = JSON.parse(res.text);
         console.log(data.success);
         if (data.success) {
-          token = data.token;
-          event.sender.send("loginSwap",token);
+          global.token = data.token;
+          event.sender.send("loginSwap",global.token);
         }
       }
 
@@ -252,8 +252,8 @@ ipcMain.on("register", (event, emailGiven, passwordGiven) => {
       else {
         var data = JSON.parse(res.text);
         if (data.success) {
-          token = data.token;
-          event.sender.send("loginSwap",token);
+          global.token = data.token;
+          event.sender.send("loginSwap",global.token);
         }
       }
 
@@ -325,12 +325,12 @@ ipcMain.on("gamePop", (event, arg) => {
 });
 
 ipcMain.on("tokenManage", (event,arg) => {
-  event.sender.send("loginSwap",token);
+  event.sender.send("loginSwap",global.token);
 });
 
 
 ipcMain.on("tokenGrab", (event,arg) => {
   console.log("reach grab");
-  event.sender.send("tokenRetrieve",token);
+  event.sender.send("tokenRetrieve",global.token);
 });
 
